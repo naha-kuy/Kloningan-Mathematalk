@@ -1,21 +1,25 @@
 {
   "name": "mathematalk",
-  "version": "1.0.0",
-  "description": "Mathematalk - Platform Bimbingan Olimpiade Matematika",
-  "main": "api/index.js",
+  "version": "2.0.0",
+  "private": true,
   "scripts": {
-    "start": "node api/index.js",
-    "dev": "node --watch api/index.js",
-    "db:migrate": "node api/seed.js",
-    "db:seed": "node api/seed.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "next": "^14.2.0",
     "pg": "^8.13.1",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
     "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.0"
   }
 }

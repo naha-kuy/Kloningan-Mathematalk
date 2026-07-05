@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+[x-cloak] { display: none !important; }
+
+@layer components {
+  .btn-kidzy {
+    @apply rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg inline-flex items-center justify-center;
+  }
+  .btn-kidzy-gold {
+    @apply bg-[#F59E0B] text-white hover:bg-opacity-90;
+  }
+  .btn-kidzy-navy {
+    @apply bg-[#0D2B5E] text-white hover:bg-opacity-90;
+  }
+  .btn-kidzy-outline {
+    @apply border-2 border-[#0D2B5E] text-[#0D2B5E] hover:bg-[#0D2B5E] hover:text-white;
+  }
+}
