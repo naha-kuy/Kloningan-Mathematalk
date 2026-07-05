@@ -151,7 +151,7 @@ export default function HomePage() {
                 Mathematalk adalah partner terpercaya persiapan olimpiade matematika. Bimbingan dari para juara untuk meraih prestasi tertinggi.
               </p>
               <div className="mt-6 sm:mt-8 flex flex-wrap gap-3 sm:gap-4">
-                <Link href="/login" className="btn-kidzy btn-kidzy-gold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-lg shadow-gold/30">
+                <Link href="/ortu/register" className="btn-kidzy btn-kidzy-gold px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base shadow-lg shadow-gold/30">
                   Daftar Sekarang
                 </Link>
                 <a href="https://wa.me/6289631322828" target="_blank" rel="noopener noreferrer" className="btn-kidzy btn-kidzy-outline px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base">
