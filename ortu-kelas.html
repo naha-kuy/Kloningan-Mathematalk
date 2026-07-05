@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="96f3p2ktiKwQyjqxvgRvVctkkS51cAyIHIiL3Auz">
+    <title>Portal Orang Tua - Mathematalk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0D2B5E',
+                        gold: '#F5A623',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] font-sans" x-data="{ mobileMenu: false }">
+    <!-- Header / Navbar -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 h-20 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto h-full px-6 lg:px-12 flex items-center justify-between">
+            <a href="/" class="flex items-center py-2">
+                <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-12 w-auto">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-4">
+                <a href="/ortu/dashboard" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Beranda
+                </a>
+                <a href="/ortu/kelas" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  bg-navy text-white shadow-lg shadow-navy/20 ">
+                    Kelas Anak
+                </a>
+                <a href="/ortu/anak" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Daftar Anak
+                </a>
+                <a href="/ortu/invoices" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Tagihan
+                </a>
+                <a href="/ortu/profile" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Profil Saya
+                </a>
+            </nav>
+
+            <!-- User Profile / Logout -->
+            <div class="flex items-center space-x-4">
+                <div class="text-right hidden lg:block">
+                    <p class="text-[10px] text-gray-600 font-bold leading-none mb-1 uppercase tracking-wider">Selamat Datang,</p>
+                    <span class="font-bold text-sm text-navy">Nafis Nyoba</span>
+                </div>
+                <div class="h-8 w-[1px] bg-gray-100 mx-2 hidden md:block"></div>
+                <form action="#" method="POST" id="logout-form" class="hidden">
+                    <input type="hidden" name="_token" value="96f3p2ktiKwQyjqxvgRvVctkkS51cAyIHIiL3Auz" autocomplete="off">                </form>
+                <button onclick="localStorage.removeItem('mathematalk_token'); document.getElementById('logout-form').submit();" class="hidden md:block text-xs font-bold text-red-500 hover:text-red-600 transition-colors bg-red-50 px-3 py-2 rounded-lg">Logout</button>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 text-navy hover:bg-gray-50 rounded-xl transition-colors">
+                    <svg x-show="!mobileMenu" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                    <svg x-show="mobileMenu" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div x-show="mobileMenu" 
+             x-transition:enter="transition ease-out duration-200" 
+             x-transition:enter-start="opacity-0 -translate-y-4" 
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150" 
+             x-transition:leave-start="opacity-100 translate-y-0" 
+             x-transition:leave-end="opacity-0 -translate-y-4"
+             class="md:hidden bg-white border-b border-gray-100 shadow-2xl absolute inset-x-0 top-full z-50 p-6"
+             style="display: none;"
+             @click.away="mobileMenu = false">
+            <div class="space-y-4">
+                <div class="pb-4 mb-4 border-b border-gray-50">
+                    <p class="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1">Akun Saya</p>
+                    <p class="font-bold text-navy">Nafis Nyoba</p>
+                </div>
+                <a href="/ortu/dashboard" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>🏠</span>
+                    <span>Beranda</span>
+                </a>
+                <a href="/ortu/kelas" class="flex items-center space-x-3 p-3 rounded-xl font-bold  bg-navy text-white ">
+                    <span>🏫</span>
+                    <span>Kelas Anak</span>
+                </a>
+                <a href="/ortu/anak" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>👦</span>
+                    <span>Daftar Anak</span>
+                </a>
+                <a href="/ortu/invoices" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>🧾</span>
+                    <span>Tagihan</span>
+                </a>
+                <a href="/ortu/profile" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>👤</span>
+                    <span>Profil Saya</span>
+                </a>
+                <div class="pt-4 mt-4 border-t border-gray-50">
+                    <button onclick="localStorage.removeItem('mathematalk_token'); document.getElementById('logout-form').submit();" class="w-full flex items-center space-x-3 p-3 rounded-xl font-bold text-red-500 hover:bg-red-50">
+                        <span>🚪</span>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-12 py-10 min-h-[calc(100vh-5rem)]">
+        <div x-data="{
+    items: [],
+    loading: true,
+    async init() {
+        try {
+            const res = await apiGet('/api/v1/ortu/kelas');
+            console.log('API Response:', res);
+            if (res && res.data) {
+                console.log('Items data:', res.data);
+                console.log('First item ID:', res.data[0]?.id);
+                this.items = res.data;
+            }
+        } catch (error) {
+            console.error('API Error:', error);
+            alert('Gagal memuat data kelas. Silakan coba login ulang.');
+        }
+        this.loading = false;
+    }
+}" x-cloak>
+    <div class="mb-10">
+        <h2 class="text-3xl font-black text-navy leading-tight">Kelas Anak Saya 🏫</h2>
+        <p class="text-gray-500 font-medium mt-1">Daftar kelas yang diikuti oleh buah hati Anda.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <template x-if="loading">
+            <template x-for="i in 3">
+                <div class="bg-white h-64 rounded-[2.5rem] animate-pulse border border-gray-50 shadow-sm"></div>
+            </template>
+        </template>
+        <template x-if="!loading && items.length === 0">
+            <div class="col-span-full">
+                <div class="bg-white border-2 border-dashed border-gray-100 p-20 rounded-[2.5rem] text-center">
+                    <div class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">🏫</div>
+                    <h4 class="text-xl font-bold text-navy mb-2">Belum ada kelas aktif</h4>
+                    <p class="text-gray-600 font-medium max-w-sm mx-auto mb-8">Anda belum memiliki kelas aktif saat ini. Yuk, cari kelas yang sesuai untuk anak Anda!</p>
+                    <a href="/" class="inline-flex items-center px-10 py-4 bg-navy text-white font-bold rounded-2xl shadow-xl shadow-navy/10 hover:-translate-y-1 transition-all">
+                        Cari Kelas Sekarang
+                    </a>
+                </div>
+            </div>
+        </template>
+        <template x-if="!loading && items.length > 0">
+            <template x-for="item in items" :key="item.id">
+                <div class="bg-white rounded-[2.5rem] p-8 border border-gray-50 shadow-xl shadow-navy/5 hover:shadow-navy/10 hover:-translate-y-1 transition-all group flex flex-col h-full"
+                     :class="{'border-orange-200 border-2': !item.is_paid && item.payment_status !== 'no_invoice'}">
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="w-16 h-16 bg-navy/5 text-navy rounded-[1.5rem] flex items-center justify-center text-3xl group-hover:bg-navy group-hover:text-white transition-colors">📐</div>
+                        <div class="flex flex-col items-end gap-2">
+                            <!-- Payment Status Badge -->
+                            <template x-if="item.payment_status === 'no_invoice'">
+                                <span class="bg-gray-100 text-gray-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                    No Invoice
+                                </span>
+                            </template>
+                            <template x-if="item.payment_status === 'lunas'">
+                                <span class="bg-green-50 text-green-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                    ✓ Lunas
+                                </span>
+                            </template>
+                            <template x-if="item.payment_status === 'menunggu'">
+                                <span class="bg-orange-50 text-orange-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                    ⏳ Menunggu
+                                </span>
+                            </template>
+                            <template x-if="item.payment_status === 'draft'">
+                                <span class="bg-yellow-50 text-yellow-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                    📝 Draft
+                                </span>
+                            </template>
+                            <template x-if="item.payment_status === 'terkirim'">
+                                <span class="bg-blue-50 text-blue-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest">
+                                    📤 Terkirim
+                                </span>
+                            </template>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-black text-navy leading-tight mb-3" x-text="item.nama_kelas"></h3>
+                    <div class="flex items-center gap-2 mb-8">
+                        <div class="w-8 h-8 bg-gold/10 rounded-full flex items-center justify-center text-[12px]">👤</div>
+                        <p class="text-sm font-bold text-gray-500" x-text="item.jenis_kelas"></p>
+                    </div>
+
+                    <!-- Payment Info -->
+                    <div x-show="item.invoice && !item.is_paid" class="mb-6 p-4 bg-orange-50 rounded-2xl border border-orange-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-orange-600">💳 Pembayaran Diperlukan</span>
+                            <span class="text-xs font-black text-orange-700" x-text="formatCurrency(item.invoice.total_tagihan)"></span>
+                        </div>
+                        <p class="text-[10px] text-orange-600">Invoice: <span x-text="item.invoice.nomor_invoice"></span></p>
+                    </div>
+
+                    <div class="mt-auto pt-8 border-t border-gray-50 flex items-center justify-between">
+                        <div>
+                            <p class="text-[9px] text-gray-600 font-black uppercase tracking-widest mb-1">Tipe Kelas</p>
+                            <span class="text-xs font-bold text-navy" x-text="item.tipe_kelas"></span>
+                        </div>
+                        <template x-if="item.is_paid">
+                            <div class="flex gap-2">
+                                <a :href="'/ortu/kelas/' + item.id" class="inline-flex items-center gap-2 text-navy font-black text-sm hover:text-gold transition-colors">
+                                    Lihat Kelas <span class="text-xl group-hover:translate-x-1 transition-transform">→</span>
+                                </a>
+                                <a :href="'/ortu/kelas/schedule?kelas_id=' + item.id" class="inline-flex items-center gap-2 text-purple font-black text-sm hover:text-gold transition-colors">
+                                    📅 Jadwal
+                                </a>
+                            </div>
+                        </template>
+                        <template x-if="!item.is_paid && item.invoice">
+                            <a :href="'/pembayaran/' + item.invoice.id" class="inline-flex items-center gap-2 px-4 py-2 bg-orange-500 text-white font-bold text-sm rounded-xl hover:bg-orange-600 transition-colors">
+                                Bayar Sekarang <span class="text-lg">→</span>
+                            </a>
+                        </template>
+                        <template x-if="!item.is_paid && !item.invoice">
+                            <button disabled class="inline-flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-500 font-bold text-sm rounded-xl cursor-not-allowed">
+                                Menunggu Invoice
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</div>
+
+<script>
+function formatCurrency(amount) {
+    return 'Rp ' + new Intl.NumberFormat('id-ID').format(amount);
+}
+</script>
+    </main>
+
+
+
+    <script>
+        window.__API_TOKEN = null;
+        // Also check for cookie if session token is not available
+        if (!window.__API_TOKEN && document.cookie) {
+            const cookies = document.cookie.split(';');
+            const mathematalkCookie = cookies.find(c => c.trim().startsWith('mathematalk_token='));
+            if (mathematalkCookie) {
+                // Split only on first '=' to handle tokens that contain '=' characters
+                const cookieParts = mathematalkCookie.trim().split('=');
+                window.__API_TOKEN = cookieParts.slice(1).join('=');
+            }
+        }
+    </script>
+    <script src="js/app.js"></script>
+    </body>
+</html>
+

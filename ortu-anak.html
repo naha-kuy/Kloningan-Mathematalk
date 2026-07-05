@@ -1,0 +1,736 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="96f3p2ktiKwQyjqxvgRvVctkkS51cAyIHIiL3Auz">
+    <title>Daftar Anak - Mathematalk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0D2B5E',
+                        gold: '#F5A623',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] font-sans" x-data="{ mobileMenu: false }">
+    <!-- Header / Navbar -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 h-20 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto h-full px-6 lg:px-12 flex items-center justify-between">
+            <a href="/" class="flex items-center py-2">
+                <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-12 w-auto">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-4">
+                <a href="/ortu/dashboard" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Beranda
+                </a>
+                <a href="/ortu/kelas" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Kelas Anak
+                </a>
+                <a href="/ortu/anak" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  bg-navy text-white shadow-lg shadow-navy/20 ">
+                    Daftar Anak
+                </a>
+                <a href="/ortu/invoices" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Tagihan
+                </a>
+                <a href="/ortu/profile" class="px-4 py-2 rounded-xl text-sm font-bold transition-all  text-gray-600 hover:text-navy hover:bg-gray-50 ">
+                    Profil Saya
+                </a>
+            </nav>
+
+            <!-- User Profile / Logout -->
+            <div class="flex items-center space-x-4">
+                <div class="text-right hidden lg:block">
+                    <p class="text-[10px] text-gray-600 font-bold leading-none mb-1 uppercase tracking-wider">Selamat Datang,</p>
+                    <span class="font-bold text-sm text-navy">Nafis Nyoba</span>
+                </div>
+                <div class="h-8 w-[1px] bg-gray-100 mx-2 hidden md:block"></div>
+                <form action="#" method="POST" id="logout-form" class="hidden">
+                    <input type="hidden" name="_token" value="96f3p2ktiKwQyjqxvgRvVctkkS51cAyIHIiL3Auz" autocomplete="off">                </form>
+                <button onclick="localStorage.removeItem('mathematalk_token'); document.getElementById('logout-form').submit();" class="hidden md:block text-xs font-bold text-red-500 hover:text-red-600 transition-colors bg-red-50 px-3 py-2 rounded-lg">Logout</button>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 text-navy hover:bg-gray-50 rounded-xl transition-colors">
+                    <svg x-show="!mobileMenu" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                    <svg x-show="mobileMenu" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div x-show="mobileMenu" 
+             x-transition:enter="transition ease-out duration-200" 
+             x-transition:enter-start="opacity-0 -translate-y-4" 
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150" 
+             x-transition:leave-start="opacity-100 translate-y-0" 
+             x-transition:leave-end="opacity-0 -translate-y-4"
+             class="md:hidden bg-white border-b border-gray-100 shadow-2xl absolute inset-x-0 top-full z-50 p-6"
+             style="display: none;"
+             @click.away="mobileMenu = false">
+            <div class="space-y-4">
+                <div class="pb-4 mb-4 border-b border-gray-50">
+                    <p class="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1">Akun Saya</p>
+                    <p class="font-bold text-navy">Nafis Nyoba</p>
+                </div>
+                <a href="/ortu/dashboard" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>🏠</span>
+                    <span>Beranda</span>
+                </a>
+                <a href="/ortu/kelas" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>🏫</span>
+                    <span>Kelas Anak</span>
+                </a>
+                <a href="/ortu/anak" class="flex items-center space-x-3 p-3 rounded-xl font-bold  bg-navy text-white ">
+                    <span>👦</span>
+                    <span>Daftar Anak</span>
+                </a>
+                <a href="/ortu/invoices" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>🧾</span>
+                    <span>Tagihan</span>
+                </a>
+                <a href="/ortu/profile" class="flex items-center space-x-3 p-3 rounded-xl font-bold  text-gray-500 hover:bg-gray-50 ">
+                    <span>👤</span>
+                    <span>Profil Saya</span>
+                </a>
+                <div class="pt-4 mt-4 border-t border-gray-50">
+                    <button onclick="localStorage.removeItem('mathematalk_token'); document.getElementById('logout-form').submit();" class="w-full flex items-center space-x-3 p-3 rounded-xl font-bold text-red-500 hover:bg-red-50">
+                        <span>🚪</span>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-12 py-10 min-h-[calc(100vh-5rem)]">
+        <div x-data="{
+    anak: [],
+    loading: true,
+    showModal: false,
+    isEdit: false,
+    currentId: null,
+    form: { nama_siswa: '', jenjang_kelas: 'SD', sekolah: '', catatan: '', email: '', phone: '' },
+    generatedPassword: null,
+    showPassword: false,
+
+    async init() {
+        console.log('Initializing anak management...');
+        // Check if we have a token
+        const token = window.__API_TOKEN || localStorage.getItem('mathematalk_token');
+        console.log('API Token available:', !!token);
+        await this.fetchAnak();
+    },
+
+    async fetchAnak() {
+        this.loading = true;
+        console.log('Fetching anak data...');
+        try {
+            const res = await apiGet('/api/v1/ortu/anak');
+            console.log('API Response:', res);
+
+            // Handle empty or invalid response
+            if (!res || typeof res !== 'object') {
+                this.anak = [];
+                console.warn('Empty or invalid response, setting empty array');
+                return;
+            }
+
+            if (res && res.success) {
+                this.anak = res.data || [];
+                console.log('Loaded anak:', this.anak);
+            } else {
+                this.anak = [];
+                console.error('API Error:', res);
+            }
+        } catch (error) {
+            console.error('Fetch Error:', error);
+
+            // Handle authentication errors
+            if (error.message && error.message.includes('HTTP error! status: 401')) {
+                window.dispatchEvent(new CustomEvent('toast', { detail: { message: 'Sesi Anda telah berakhir. Silakan login kembali.', type: 'error' } }));
+                window.location.href = '/login';
+                return;
+            }
+
+            this.anak = [];
+        } finally {
+            this.loading = false;
+        }
+    },
+
+    openAddModal() {
+        this.isEdit = false;
+        this.currentId = null;
+        this.generatedPassword = null;
+        this.showPassword = false;
+        this.form = { nama_siswa: '', jenjang_kelas: 'SD', sekolah: '', catatan: '', email: '', phone: '' };
+        this.showModal = true;
+    },
+
+    openEditModal(child) {
+        this.isEdit = true;
+        this.currentId = child.id;
+        this.generatedPassword = null;
+        this.showPassword = false;
+        this.form = { ...child };
+        this.showModal = true;
+    },
+
+    showUpgradeModal: false,
+    upgradeForm: { email: '', phone: '' },
+    upgradingChild: null,
+
+    openUpgradeModal(child) {
+        this.upgradingChild = child;
+        this.upgradeForm = { email: '', phone: '' };
+        this.showUpgradeModal = true;
+    },
+
+    async upgradeAnak() {
+        if (!this.upgradingChild) return;
+
+        try {
+            const res = await apiPost('/api/v1/ortu/anak/' + this.upgradingChild.id + '/upgrade', this.upgradeForm);
+
+            if (res && res.success) {
+                this.generatedPassword = res.data.password;
+                this.showUpgradeModal = false;
+                await this.fetchAnak();
+
+                // Show password info
+                setTimeout(() => {
+                    window.dispatchEvent(new CustomEvent('confirm', {
+                        detail: {
+                            title: '🔐 Akun Anak Berhasil Dibuat',
+                            message: 'Gunakan kredensial berikut untuk login akun anak:',
+                            isInfo: true,
+                            customContent: `
+                                <div class="bg-navy/5 rounded-2xl p-6 mt-4 mb-4">
+                                    <div class="mb-4">
+                                        <label class="text-xs font-bold text-gray-600 uppercase tracking-widest">Email</label>
+                                        <div class="text-navy font-bold text-lg mt-1">${res.data.email || '-'}</div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="text-xs font-bold text-gray-600 uppercase tracking-widest">Password</label>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <input type="text" value="${res.data.password}" readonly class="bg-white border-2 border-navy/20 rounded-xl px-4 py-3 font-mono font-bold text-navy text-lg flex-1" />
+                                            <button onclick="navigator.clipboard.writeText('${res.data.password}'); this.textContent='✓'; setTimeout(() => this.textContent='📋', 1500)" class="bg-navy text-white px-4 py-3 rounded-xl font-bold hover:bg-gold transition-colors">📋</button>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-4">💾 Simpan password ini dengan aman. Anak dapat mengubah password setelah login.</p>
+                                </div>
+                            `,
+                            options: {
+                                showCancel: false,
+                                confirmText: 'Mengerti',
+                            }
+                        }
+                    }));
+                }, 300);
+
+                this.showToast('Akun login berhasil dibuat untuk anak', 'success');
+            } else {
+                this.showToast(res.message || 'Terjadi kesalahan', 'error');
+            }
+        } catch (error) {
+            console.error('Upgrade Error:', error);
+            if (error.message && error.message.includes('HTTP error! status: 401')) {
+                this.showToast('Sesi Anda telah berakhir. Silakan login kembali.', 'error');
+                window.location.href = '/login';
+                return;
+            }
+            this.showToast('Terjadi kesalahan saat membuat akun', 'error');
+        }
+    },
+
+    async saveAnak() {
+        console.log('Saving anak:', this.form);
+        try {
+            let res;
+            if (this.isEdit) {
+                console.log('Updating anak with ID:', this.currentId);
+                res = await apiPatch('/api/v1/ortu/anak/' + this.currentId, this.form);
+            } else {
+                console.log('Creating new anak');
+                res = await apiPost('/api/v1/ortu/anak', this.form);
+            }
+
+            console.log('Save Response:', res);
+            if (res && res.success) {
+                // Store generated password for new anak
+                if (res.data && res.data.password) {
+                    this.generatedPassword = res.data.password;
+                    this.showPassword = true;
+                }
+
+                this.showModal = false;
+                await this.fetchAnak();
+                this.showToast(this.isEdit ? 'Data anak berhasil diperbarui' : 'Anak berhasil ditambahkan', 'success');
+
+                // Show password info if generated
+                if (this.generatedPassword) {
+                    setTimeout(() => {
+                        this.showPasswordModal();
+                    }, 500);
+                }
+
+                // Check if there's a redirect parameter and redirect back to the class
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirectTo = urlParams.get('redirect_to');
+                if (redirectTo && !this.generatedPassword) {
+                    setTimeout(() => {
+                        window.location.href = redirectTo;
+                    }, 1500);
+                }
+            } else {
+                this.showToast(res.message || 'Terjadi kesalahan', 'error');
+            }
+        } catch (error) {
+            console.error('Save Error:', error);
+
+            // Handle authentication errors
+            if (error.message && error.message.includes('HTTP error! status: 401')) {
+                this.showToast('Sesi Anda telah berakhir. Silakan login kembali.', 'error');
+                window.location.href = '/login';
+                return;
+            }
+
+            // Handle other errors
+            if (error.message) {
+                this.showToast('Terjadi kesalahan: ' + error.message, 'error');
+            } else {
+                this.showToast('Terjadi kesalahan yang tidak diketahui', 'error');
+            }
+        }
+    },
+
+    showPasswordModal() {
+        window.dispatchEvent(new CustomEvent('confirm', {
+            detail: {
+                title: '🔐 Akun Anak Berhasil Dibuat',
+                message: 'Gunakan kredensial berikut untuk login akun anak:',
+                isInfo: true,
+                customContent: `
+                    <div class="bg-navy/5 rounded-2xl p-6 mt-4 mb-4">
+                        <div class="mb-4">
+                            <label class="text-xs font-bold text-gray-600 uppercase tracking-widest">Email</label>
+                            <div class="text-navy font-bold text-lg mt-1">${this.form.email || '-'}</div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="text-xs font-bold text-gray-600 uppercase tracking-widest">Password</label>
+                            <div class="flex items-center gap-2 mt-1">
+                                <input type="text" value="${this.generatedPassword}" readonly class="bg-white border-2 border-navy/20 rounded-xl px-4 py-3 font-mono font-bold text-navy text-lg flex-1" />
+                                <button onclick="navigator.clipboard.writeText('${this.generatedPassword}'); this.textContent='✓'; setTimeout(() => this.textContent='📋', 1500)" class="bg-navy text-white px-4 py-3 rounded-xl font-bold hover:bg-gold transition-colors">📋</button>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 mt-4">💾 Simpan password ini dengan aman. Anak dapat mengubah password setelah login.</p>
+                    </div>
+                `,
+                options: {
+                    showCancel: false,
+                    confirmText: 'Mengerti',
+                }
+            }
+        }));
+    },
+
+    async deleteAnak(id) {
+        window.dispatchEvent(new CustomEvent('confirm', {
+            detail: {
+                title: 'Hapus Data Anak',
+                message: 'Apakah Anda yakin ingin menghapus data anak ini?',
+                options: {
+                    isDangerous: true,
+                    confirmText: 'Ya, Hapus',
+                    onConfirm: async () => {
+                        try {
+                            const res = await apiDelete('/api/v1/ortu/anak/' + id);
+                            if (res && res.success) {
+                                await this.fetchAnak();
+                                this.showToast('Data anak berhasil dihapus', 'success');
+                            } else {
+                                this.showToast(res.message || 'Terjadi kesalahan', 'error');
+                            }
+                        } catch (error) {
+                            console.error('Delete Error:', error);
+
+                            // Handle authentication errors
+                            if (error.message && error.message.includes('HTTP error! status: 401')) {
+                                this.showToast('Sesi Anda telah berakhir. Silakan login kembali.', 'error');
+                                window.location.href = '/login';
+                                return;
+                            }
+
+                            this.showToast('Terjadi kesalahan saat menghapus data', 'error');
+                        }
+                    }
+                }
+            }
+        }));
+    }
+}" x-cloak>
+    <!-- Header Section -->
+    <div class="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+            <h2 class="text-3xl font-black text-navy leading-tight">Daftar Anak 🎒</h2>
+            <p class="text-gray-500 font-medium mt-1">Kelola data buah hati Anda yang terdaftar di Mathematalk.</p>
+        </div>
+        <button @click="openAddModal" class="bg-navy text-white px-8 py-4 rounded-2xl font-bold hover:bg-gold transition-all duration-300 shadow-xl shadow-navy/20 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Tambah Anak
+        </button>
+    </div>
+
+    <!-- Loading State -->
+    <template x-if="loading">
+        <div class="flex justify-center py-20">
+            <svg class="animate-spin h-10 w-10 text-navy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </div>
+    </template>
+
+    <!-- Empty State -->
+    <template x-if="!loading && anak.length === 0">
+        <div class="bg-white border-2 border-dashed border-gray-100 p-16 rounded-[2.5rem] text-center group">
+            <div class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 text-4xl group-hover:scale-110 transition-transform">🧸</div>
+            <h4 class="text-xl font-bold text-navy mb-3">Belum ada anak terdaftar</h4>
+            <p class="text-gray-600 font-medium max-w-sm mx-auto mb-10">Silakan tambahkan data anak Anda untuk mulai mendaftar ke kelas-kelas kami.</p>
+            <button @click="openAddModal" class="bg-navy text-white px-10 py-4 rounded-2xl font-bold hover:bg-gold transition-all shadow-lg">
+                Tambah Anak Pertama
+            </button>
+
+            <!-- Navigation Section -->
+            <div class="mt-16 pt-8 border-t border-gray-100">
+                <h5 class="text-lg font-black text-navy mb-6">Atau Telusuri Kelas Kami</h5>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a href="/kelas?jenis=private" class="group">
+                        <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
+                            <div class="text-3xl mb-3">👤</div>
+                            <h6 class="font-bold text-lg">Private</h6>
+                            <p class="text-xs opacity-90 mt-1">1 murid, 1 guru</p>
+                        </div>
+                    </a>
+                    <a href="/kelas?jenis=semi_private" class="group">
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
+                            <div class="text-3xl mb-3">👥</div>
+                            <h6 class="font-bold text-lg">Semi-Private</h6>
+                            <p class="text-xs opacity-90 mt-1">2-5 murid</p>
+                        </div>
+                    </a>
+                    <a href="/kelas?jenis=grup_besar" class="group">
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
+                            <div class="text-3xl mb-3">👥👥</div>
+                            <h6 class="font-bold text-lg">Group Besar</h6>
+                            <p class="text-xs opacity-90 mt-1">6+ murid</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Class Navigation Section -->
+    <template x-if="!loading && anak.length > 0">
+        <div class="mb-12">
+            <h5 class="text-2xl font-black text-navy mb-8">Telusuri Kelas untuk Anak Anda</h5>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <a href="/kelas?jenis=private" class="group">
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-8 rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
+                        <div class="text-4xl mb-4">👤</div>
+                        <h6 class="font-bold text-xl">Kelas Private</h6>
+                        <p class="text-sm opacity-90 mt-2">Pembelajaran personal 1 murid, 1 guru</p>
+                        <p class="text-xs opacity-80 mt-3">Ideal untuk fokus maksimal</p>
+                    </div>
+                </a>
+                <a href="/kelas?jenis=semi_private" class="group">
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-8 rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
+                        <div class="text-4xl mb-4">👥</div>
+                        <h6 class="font-bold text-xl">Kelas Semi-Private</h6>
+                        <p class="text-sm opacity-90 mt-2">Kelas kecil 2-5 murid</p>
+                        <p class="text-xs opacity-80 mt-3">Interaksi dengan teman sebaya</p>
+                    </div>
+                </a>
+                <a href="/kelas?jenis=grup_besar" class="group">
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-2xl hover:shadow-xl hover:scale-105 transition-all">
+                        <div class="text-4xl mb-4">👥👥</div>
+                        <h6 class="font-bold text-xl">Kelas Group Besar</h6>
+                        <p class="text-sm opacity-90 mt-2">Kelas 6+ murid dengan harga terjangkau</p>
+                        <p class="text-xs opacity-80 mt-3">Sosialisasi dan diskusi kelompok</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </template>
+
+    <!-- Content Grid -->
+    <template x-if="!loading && anak.length > 0">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <template x-for="child in anak" :key="child.id">
+                <div class="bg-white rounded-[2.5rem] border border-gray-50 shadow-sm hover:shadow-2xl hover:shadow-navy/5 transition-all group p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-navy/5 -mr-16 -mt-16 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="w-16 h-16 bg-gold rounded-2xl flex items-center justify-center text-3xl shadow-lg shadow-gold/20 group-hover:scale-110 transition-transform">👦</div>
+                            <div>
+                                <h4 class="font-black text-navy text-xl leading-tight" x-text="child.nama_siswa"></h4>
+                                <span class="bg-navy/5 text-navy text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest mt-2 inline-block" x-text="child.jenjang_kelas"></span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center gap-3">
+                                <span class="text-gold">🏫</span>
+                                <span class="text-sm font-bold text-gray-500" x-text="child.sekolah || 'Sekolah belum diisi'"></span>
+                            </div>
+
+                            <!-- Login Status -->
+                            <div class="flex items-center gap-3">
+                                <template x-if="child.has_login">
+                                    <span class="text-green-500">✅</span>
+                                </template>
+                                <template x-if="!child.has_login">
+                                    <span class="text-amber-500">⚠️</span>
+                                </template>
+                                <span class="text-sm font-bold" :class="child.has_login ? 'text-green-600' : 'text-amber-600'" x-text="child.has_login ? 'Punya akun login' : 'Belum ada akun login'"></span>
+                            </div>
+
+                            <!-- Contact Info -->
+                            <template x-if="child.email">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-blue-500">📧</span>
+                                    <span class="text-sm font-medium text-gray-600" x-text="child.email"></span>
+                                </div>
+                            </template>
+                            <template x-if="child.phone">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-green-500">📱</span>
+                                    <span class="text-sm font-medium text-gray-600" x-text="child.phone"></span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-6 border-t border-gray-50">
+                            <template x-if="!child.has_login">
+                                <button @click="openUpgradeModal(child)" class="flex-1 py-3 bg-green-50 text-green-600 rounded-xl text-xs font-black hover:bg-green-600 hover:text-white transition-all">
+                                    🔐 Buat Akun
+                                </button>
+                            </template>
+                            <button @click="openEditModal(child)" class="flex-1 py-3 bg-gray-50 text-navy rounded-xl text-xs font-black hover:bg-navy hover:text-white transition-all">
+                                EDIT
+                            </button>
+                            <button @click="deleteAnak(child.id)" class="flex-1 py-3 bg-red-50 text-red-500 rounded-xl text-xs font-black hover:bg-red-500 hover:text-white transition-all">
+                                HAPUS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <!-- Modal Form -->
+    <div x-show="showModal" 
+         class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         @click.away="showModal = false">
+        
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-8"
+             x-transition:enter-end="opacity-100 translate-y-0">
+            
+            <div class="p-8 md:p-12">
+                <div class="flex justify-between items-center mb-10">
+                    <h3 class="text-2xl font-black text-navy uppercase tracking-tight" x-text="isEdit ? 'Edit Data Anak' : 'Tambah Anak Baru'"></h3>
+                    <button @click="showModal = false" class="text-gray-600 hover:text-navy transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <form @submit.prevent="saveAnak" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Nama Lengkap Anak</label>
+                        <input type="text" x-model="form.nama_siswa" required
+                               class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium"
+                               placeholder="Contoh: John Doe Jr.">
+                    </div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Jenjang Sekolah</label>
+                            <select x-model="form.jenjang_kelas" required
+                                    class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium appearance-none">
+                                <option value="SD">SD</option>
+                                <option value="SMP">SMP</option>
+                                <option value="SMA">SMA</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Asal Sekolah</label>
+                            <input type="text" x-model="form.sekolah"
+                                   class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium"
+                                   placeholder="Nama Sekolah">
+                        </div>
+                    </div>
+
+                    <template x-if="!isEdit">
+                        <div class="bg-gold/10 border-2 border-gold/30 rounded-2xl p-6 mb-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="text-2xl">🔐</span>
+                                <div>
+                                    <h4 class="font-bold text-navy text-sm">Akun Login Anak</h4>
+                                    <p class="text-xs text-gray-600">Anak akan memiliki akun sendiri untuk login</p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="!isEdit">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Email Anak <span class="text-gray-400">(Opsional)</span></label>
+                                <input type="email" x-model="form.email"
+                                       class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium"
+                                       placeholder="nama@email.com">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">WhatsApp Anak <span class="text-gray-400">(Opsional)</span></label>
+                                <input type="text" x-model="form.phone"
+                                       class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium"
+                                       placeholder="08xxxxxxxxxx">
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                            <p class="text-xs text-blue-800">
+                                <span class="font-bold">ℹ️ Password:</span> Akan dibuat otomatis dari 4 digit akhir WhatsApp ortu + nama anak tanpa spasi.
+                            </p>
+                        </div>
+                    </template>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Catatan Tambahan (Opsional)</label>
+                        <textarea x-model="form.catatan"
+                                  class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium"
+                                  rows="3" placeholder="Alergi, hobi, atau hal lainnya..."></textarea>
+                    </div>
+
+                    <div class="pt-6 flex gap-4">
+                        <button type="button" @click="showModal = false" class="flex-1 py-4 bg-gray-100 text-navy font-bold rounded-2xl hover:bg-gray-200 transition-colors">
+                            Batal
+                        </button>
+                        <button type="submit" class="flex-1 py-4 bg-navy text-white font-bold rounded-2xl hover:bg-gold transition-colors shadow-lg shadow-navy/20">
+                            <span x-text="isEdit ? 'Simpan Data' : 'Buat Akun Anak'"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upgrade Modal -->
+    <div x-show="showUpgradeModal"
+         class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         @click.away="showUpgradeModal = false">
+
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-8"
+             x-transition:enter-end="opacity-100 translate-y-0">
+
+            <div class="p-8 md:p-12">
+                <div class="flex justify-between items-center mb-10">
+                    <h3 class="text-2xl font-black text-navy uppercase tracking-tight">🔐 Buat Akun Anak</h3>
+                    <button @click="showUpgradeModal = false" class="text-gray-600 hover:text-navy transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-6 mb-8">
+                    <p class="text-sm text-green-800 font-medium">
+                        Anak <span class="font-black" x-text="upgradingChild?.nama_siswa"></span> akan memiliki akun login sendiri.
+                    </p>
+                </div>
+
+                <form @submit.prevent="upgradeAnak" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Email Anak <span class="text-gray-400">(Opsional)</span></label>
+                        <input type="email" x-model="upgradeForm.email"
+                               class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium"
+                               placeholder="nama@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">WhatsApp Anak <span class="text-gray-400">(Opsional)</span></label>
+                        <input type="text" x-model="upgradeForm.phone"
+                               class="w-full bg-gray-50 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium"
+                               placeholder="08xxxxxxxxxx">
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                        <p class="text-xs text-blue-800">
+                            <span class="font-bold">ℹ️ Password:</span> Akan dibuat otomatis dari 4 digit akhir WhatsApp ortu + nama anak tanpa spasi.
+                        </p>
+                    </div>
+
+                    <div class="pt-6 flex gap-4">
+                        <button type="button" @click="showUpgradeModal = false" class="flex-1 py-4 bg-gray-100 text-navy font-bold rounded-2xl hover:bg-gray-200 transition-colors">
+                            Batal
+                        </button>
+                        <button type="submit" class="flex-1 py-4 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20">
+                            Buat Akun
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+
+
+
+    <script>
+        window.__API_TOKEN = null;
+        // Also check for cookie if session token is not available
+        if (!window.__API_TOKEN && document.cookie) {
+            const cookies = document.cookie.split(';');
+            const mathematalkCookie = cookies.find(c => c.trim().startsWith('mathematalk_token='));
+            if (mathematalkCookie) {
+                // Split only on first '=' to handle tokens that contain '=' characters
+                const cookieParts = mathematalkCookie.trim().split('=');
+                window.__API_TOKEN = cookieParts.slice(1).join('=');
+            }
+        }
+    </script>
+    <script src="js/app.js"></script>
+    </body>
+</html>
+

@@ -1,0 +1,670 @@
+﻿<!DOCTYPE html>
+<html lang="id" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <title>Kelas Aktif - Mathematalk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preload" as="style" href="build/assets/app.css" /><link rel="modulepreload" as="script" href="build/assets/app.js" /><link rel="stylesheet" href="build/assets/app.css" /><script type="module" src="build/assets/app.js"></script>    <script src="js/alpine.min.js" defer></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        .btn-kidzy {
+            @apply rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg inline-flex items-center justify-center;
+        }
+        .btn-kidzy-gold {
+            @apply bg-gold text-white hover:bg-opacity-90;
+        }
+        .btn-kidzy-navy {
+            @apply bg-navy text-white hover:bg-opacity-90;
+        }
+        .btn-kidzy-outline {
+            @apply border-2 border-navy text-navy hover:bg-navy hover:text-white;
+        }
+    </style>
+</head>
+<body class="bg-cream text-navy font-sans antialiased overflow-x-hidden">
+    
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20">
+            <div class="flex items-center">
+                <a href="index.html" class="flex-shrink-0 flex items-center group py-2">
+                    <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-10 sm:h-12 w-auto transform group-hover:scale-105 transition-transform drop-shadow-sm">
+                </a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Beranda</a>
+                <a href="about-us.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">About Us</a>
+                <!-- Kelas Aktif Dropdown -->
+                <div class="relative flex h-full items-center" x-data="{ dropdownOpen: false }" @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
+                    <button class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors inline-flex items-center gap-1">
+                        Kelas Aktif
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="dropdownOpen" x-transition x-cloak class="absolute left-1/2 -translate-x-1/2 top-full mt-0 w-64 rounded-2xl shadow-xl bg-white ring-1 ring-black/5 z-50 overflow-hidden border-2 border-cream">
+                        <div class="py-2">
+                            <a href="private-class.html" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">👤 Kelas Private</a>
+                            <a href="kelas-aktif.html" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">👥 Kelas Semi Private</a>
+                            <a href="index.html#grup-besar" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">🏛️ Kelas Grup Besar</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="store.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Store</a>
+                <a href="hall-of-fame.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Hall of Fame</a>
+                <a href="contact.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Contact</a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
+                                    <a href="login.html" class="text-navy font-black text-sm hover:text-gold transition-colors">Masuk</a>
+                    <a href="register.html" class="bg-gold text-white px-6 lg:px-8 py-2.5 rounded-full font-black text-sm hover:bg-navy transition-all duration-300 shadow-lg shadow-gold/20">
+                        Daftar
+                    </a>
+                
+                            </div>
+            
+            <div class="flex items-center md:hidden">
+                <button @click="open = !open" class="text-navy hover:text-gold focus:outline-none bg-cream p-2 rounded-xl transition-colors">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div x-show="open" x-cloak 
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-4"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="md:hidden bg-white border-t-2 border-cream px-4 pt-2 pb-6 space-y-2 shadow-xl rounded-b-3xl">
+        <a href="index.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Beranda</a>
+        <a href="about-us.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">About Us</a>
+        <div class="px-4 py-2 space-y-2 bg-cream rounded-xl">
+            <div class="text-xs font-black text-navy uppercase tracking-wider">Kelas Aktif</div>
+            <a href="private-class.html" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">👤 Kelas Private</a>
+            <a href="kelas-aktif.html" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">👥 Kelas Semi Private</a>
+            <a href="index.html#grup-besar" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">🏛️ Kelas Grup Besar</a>
+        </div>
+        <a href="store.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Store</a>
+        <a href="hall-of-fame.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Hall of Fame</a>
+        <a href="contact.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Contact</a>
+        <div class="pt-4 flex flex-col space-y-3">
+                            <a href="login.html" class="bg-navy text-white py-4 rounded-full text-center font-black shadow-lg">Masuk</a>
+                <a href="register.html" class="bg-gold text-white py-4 rounded-full text-center font-black shadow-lg">Daftar Sekarang</a>
+            
+                    </div>
+    </div>
+</nav>
+
+    <main class="min-h-screen">
+        <div class="bg-cream min-h-screen pb-24 relative" x-data="kelasAktif()">
+    <!-- Decorative background elements -->
+    <div class="absolute top-40 left-10 w-32 h-32 bg-cyan/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-40 right-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+
+    <!-- Banner -->
+    <div class="bg-navy pt-16 pb-24 px-4 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20"></div>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between relative z-10">
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-black text-white mb-4">Kelas Aktif</h1>
+                <p class="text-gray-500 text-lg font-medium max-w-xl">Temukan kelas yang sedang berjalan dan tingkatkan kemampuan matematika anak Anda bersama tutor terbaik.</p>
+            </div>
+            <div class="hidden md:block">
+                <a href="index.html" class="bg-gold text-white px-12 py-5 rounded-full font-black text-xl shadow-xl hover:bg-navy transition-all duration-300 inline-flex items-center gap-3">
+                    <span>&larr;</span> Kembali
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Wavy Divider Transition -->
+    <div class="w-full overflow-hidden leading-none -mt-[50px] relative z-20">
+        <svg class="relative block w-full h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,114.2,189.6,98.66,236.43,86.29,281.33,63.95,321.39,56.44Z" class="fill-[#FFF9F2]"></path>
+        </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 -mt-8 relative z-30">
+        <!-- Pencarian & Filter -->
+        <div class="bg-white p-6 rounded-[2rem] shadow-xl mb-12 flex flex-col md:flex-row gap-4 items-center justify-between border border-gray-100">
+            <div class="w-full md:w-1/2 relative">
+                <input type="text" x-model="searchQuery" placeholder="Cari nama kelas atau tutor..." class="w-full pl-12 pr-4 py-4 rounded-full bg-white text-gray-800 border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold focus:bg-white focus:text-gray-900 font-medium placeholder-gray-400 outline-none transition-shadow">
+                <span class="absolute left-5 top-4 text-gray-600 text-lg">🔍</span>
+            </div>
+            <div class="w-full md:w-auto flex flex-wrap gap-4">
+                <select x-model="selectedKategori" class="flex-1 md:w-48 px-6 py-4 rounded-full bg-white text-gray-800 border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold focus:bg-white focus:text-gray-900 font-bold outline-none cursor-pointer appearance-none">
+                    <option value="">Semua Tipe Kelas</option>
+                    <option value="olimpiade">Olimpiade</option>
+                    <option value="matematika_dasar">Matematika Dasar</option>
+                    <option value="program_tka">Program TKA</option>
+                </select>
+                <select x-model="selectedLevel" class="flex-1 md:w-48 px-6 py-4 rounded-full bg-white text-gray-800 border border-gray-300 focus:ring-2 focus:ring-gold focus:border-gold focus:bg-white focus:text-gray-900 font-bold outline-none cursor-pointer appearance-none">
+                    <option value="">Semua Jenjang</option>
+                    <option value="SD">SD</option>
+                    <option value="SMP">SMP</option>
+                    <option value="SMA">SMA</option>
+                </select>
+                <button @click="resetFilter()" class="bg-navy text-white hover:bg-gold px-8 py-4 rounded-full font-black transition-all shadow-lg">Reset</button>
+            </div>
+        </div>
+
+        <!-- Section 1: Kelas Aktif (With Dates) -->
+        <template x-if="!loading && kelasWithDate.length > 0">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <h2 class="text-2xl font-black text-navy">📅 Kelas Aktif</h2>
+                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold" x-text="kelasWithDate.length + ' kelas tersedia'"></span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <template x-for="kelas in paginatedWithDate" :key="kelas.id">
+                        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col group relative">
+                            <!-- Class Header & Tags -->
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="px-4 py-1.5 bg-cyan/10 text-cyan text-xs font-black rounded-full uppercase tracking-wider" x-text="kelas.tipe_kelas.label"></span>
+                                <span class="text-xs font-black text-gold bg-gold/10 px-4 py-1.5 rounded-full uppercase tracking-wider" x-text="kelas.jenis_kelas.label"></span>
+                            </div>
+
+                            <h3 class="text-2xl font-black text-navy mb-2 group-hover:text-gold transition-colors" x-text="kelas.nama_kelas"></h3>
+                            <p class="text-gray-500 text-sm font-medium mb-6 flex items-center gap-2">
+                                <span class="text-lg">👨‍🏫</span> <span x-text="'Tutor: ' + (kelas.sesi_kelas?.[0]?.guru?.name || 'TBA')"></span>
+                            </p>
+
+                            <div class="flex justify-between items-center px-2 py-4 border-t border-b border-dashed border-gray-200 mb-6 flex-1">
+                                <div class="text-center w-1/2">
+                                    <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Mulai</div>
+                                    <div class="font-bold text-navy text-sm truncate px-1" x-text="kelas.tanggal_mulai ? kelas.tanggal_mulai : 'TBA'"></div>
+                                </div>
+                                <div class="w-px h-8 bg-gray-200"></div>
+                                <div class="text-center w-1/2">
+                                    <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Siswa</div>
+                                    <div class="font-bold text-navy text-sm" x-text="kelas.current_students + ' / ' + kelas.kapasitas_max + ' Terdaftar'"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between mb-6 px-2">
+                                <div class="text-xs text-gray-600 font-bold uppercase">Biaya</div>
+                                <div class="text-xl font-black text-navy" x-text="'Rp ' + Number(kelas.harga_per_orang).toLocaleString('id-ID')"></div>
+                            </div>
+
+                            <a :href="'/kelas/' + kelas.id" class="bg-navy text-white w-full py-4 rounded-full text-center font-black text-lg shadow-lg hover:bg-gold transition-all duration-300 mt-auto">
+                                <span x-text="isFull(kelas) ? 'Daftar Waiting List Kelas' : 'Daftar Kelas Ini'"></span>
+                            </a>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Pagination for With Date -->
+                <template x-if="totalPagesWithDate > 1">
+                    <div class="mt-12 flex items-center justify-center gap-2">
+                        <button @click="goToPageWithDate(currentPageWithDate - 1)"
+                                :disabled="currentPageWithDate === 1"
+                                :class="currentPageWithDate === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-navy border border-gray-200 hover:bg-navy hover:text-white'"
+                                class="w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all shadow-sm">⏮</button>
+                        <template x-for="page in visiblePagesWithDate" :key="page">
+                            <button @click="goToPageWithDate(page)"
+                                    :class="page === currentPageWithDate ? 'bg-navy text-white scale-110' : 'bg-white text-navy border border-gray-200 hover:bg-gray-50'"
+                                    class="w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all shadow-sm min-w-[40px]"
+                                    x-text="page"></button>
+                        </template>
+                        <button @click="goToPageWithDate(currentPageWithDate + 1)"
+                                :disabled="currentPageWithDate === totalPagesWithDate"
+                                :class="currentPageWithDate === totalPagesWithDate ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-navy border border-gray-200 hover:bg-navy hover:text-white'"
+                                class="w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all shadow-sm">⏭</button>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Section 2: Kelas Waiting List (Without Dates) -->
+        <template x-if="!loading && kelasWithoutDate.length > 0">
+            <div class="mt-16">
+                <div class="flex items-center gap-3 mb-6">
+                    <h2 class="text-2xl font-black text-navy">⏳ Kelas Waiting List</h2>
+                    <span class="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-bold" x-text="kelasWithoutDate.length + ' kelas tersedia'"></span>
+                </div>
+                <p class="text-gray-600 mb-6">Kelas berikut sedang dalam persiapan. Belum ada jadwal yang ditentukan. Anda dapat bergabung ke waiting list untuk mendapatkan prioritas ketika jadwal telah ditentukan.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <template x-for="kelas in paginatedWithoutDate" :key="kelas.id">
+                        <div class="bg-amber-50 p-6 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all duration-500 border border-amber-200 flex flex-col group relative">
+                            <!-- Waiting List Badge -->
+                            <div class="absolute -top-3 -right-3">
+                                <span class="px-4 py-2 bg-amber-500 text-white rounded-full text-xs font-black uppercase tracking-wider shadow-lg">
+                                    ⏳ Waiting List
+                                </span>
+                            </div>
+
+                            <!-- Class Header & Tags -->
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="px-4 py-1.5 bg-cyan/10 text-cyan text-xs font-black rounded-full uppercase tracking-wider" x-text="kelas.tipe_kelas.label"></span>
+                                <span class="text-xs font-black text-gold bg-gold/10 px-4 py-1.5 rounded-full uppercase tracking-wider" x-text="kelas.jenis_kelas.label"></span>
+                            </div>
+
+                            <h3 class="text-2xl font-black text-navy mb-2 group-hover:text-gold transition-colors" x-text="kelas.nama_kelas"></h3>
+
+                            <div class="flex justify-between items-center px-2 py-4 border-t border-b border-dashed border-amber-200 mb-6 flex-1">
+                                <div class="text-center w-1/2">
+                                    <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Jadwal</div>
+                                    <div class="font-bold text-amber-700 text-sm truncate px-1">Belum Ditentukan</div>
+                                </div>
+                                <div class="w-px h-8 bg-amber-200"></div>
+                                <div class="text-center w-1/2">
+                                    <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Waiting</div>
+                                    <div class="font-bold text-amber-700 text-sm" x-text="kelas.waiting_list_count + ' antrian'"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between mb-6 px-2">
+                                <div class="text-xs text-gray-600 font-bold uppercase">Biaya</div>
+                                <div class="text-xl font-black text-navy" x-text="'Rp ' + Number(kelas.harga_per_orang).toLocaleString('id-ID')"></div>
+                            </div>
+
+                            <a :href="'/kelas/' + kelas.id" class="bg-amber-500 text-white w-full py-4 rounded-full text-center font-black text-lg shadow-lg hover:bg-amber-600 transition-all duration-300 mt-auto">
+                                Daftar Waiting List
+                            </a>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Pagination for Without Date -->
+                <template x-if="totalPagesWithoutDate > 1">
+                    <div class="mt-12 flex items-center justify-center gap-2">
+                        <button @click="goToPageWithoutDate(currentPageWithoutDate - 1)"
+                                :disabled="currentPageWithoutDate === 1"
+                                :class="currentPageWithoutDate === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-navy border border-gray-200 hover:bg-navy hover:text-white'"
+                                class="w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all shadow-sm">⏮</button>
+                        <template x-for="page in visiblePagesWithoutDate" :key="page">
+                            <button @click="goToPageWithoutDate(page)"
+                                    :class="page === currentPageWithoutDate ? 'bg-navy text-white scale-110' : 'bg-white text-navy border border-gray-200 hover:bg-gray-50'"
+                                    class="w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all shadow-sm min-w-[40px]"
+                                    x-text="page"></button>
+                        </template>
+                        <button @click="goToPageWithoutDate(currentPageWithoutDate + 1)"
+                                :disabled="currentPageWithoutDate === totalPagesWithoutDate"
+                                :class="currentPageWithoutDate === totalPagesWithoutDate ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-navy border border-gray-200 hover:bg-navy hover:text-white'"
+                                class="w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all shadow-sm">⏭</button>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Empty State -->
+        <div x-show="!loading && filteredKelas.length === 0" class="py-20 text-center text-gray-500 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
+            <div class="w-24 h-24 bg-cream rounded-full flex items-center justify-center text-5xl mx-auto mb-6">😕</div>
+            <h3 class="text-2xl font-black text-navy mb-2">Kelas Tidak Ditemukan</h3>
+            <p class="font-medium">Silakan coba kata kunci atau kategori yang berbeda.</p>
+            <button @click="resetFilter()" class="mt-6 bg-navy text-white px-10 py-3 rounded-full font-black hover:bg-gold transition-all shadow-lg">Reset Pencarian</button>
+        </div>
+
+        <!-- Loading State -->
+        <div x-show="loading" class="py-20 text-center text-gray-500 bg-white rounded-[3rem] border-gray-100 shadow-sm">
+            <div class="animate-spin inline-block w-12 h-12 border-4 border-gold border-t-transparent rounded-full mb-4"></div>
+            <p class="font-bold text-navy text-lg">Memuat kelas...</p>
+        </div>
+
+        <!-- CTA Bantuan -->
+        <div class="mt-20 bg-cyan/10 rounded-[3rem] p-10 md:p-16 text-center relative overflow-hidden border border-cyan/20 shadow-sm">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-cyan/20 rounded-full -mr-20 -mt-20"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-gold/20 rounded-full -ml-16 -mb-16"></div>
+            <div class="relative z-10">
+                <div class="text-5xl mb-6">🤔</div>
+                <h2 class="text-3xl md:text-4xl font-black text-navy mb-4">Masih Bingung Memilih Kelas?</h2>
+                <p class="text-gray-600 font-medium mb-8 max-w-2xl mx-auto text-lg">Jangan ragu, tim admin kami siap membantu Anda mencarikan kelas dan tutor yang paling tepat sesuai dengan kebutuhan anak Anda.</p>
+                <a :href="'https://wa.me/' + waNumber + '?text=Halo%20Admin,%20saya%20butuh%20bantuan%20untuk%20memilih%20kelas.'" target="_blank" class="bg-gold text-white px-12 py-5 rounded-full font-black text-xl shadow-xl hover:bg-navy transition-all duration-300 inline-flex items-center gap-3">
+                    Hubungi Admin via WA
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </main>
+
+    <!-- Wavy Divider for Footer -->
+    <div class="w-full overflow-hidden leading-none translate-y-[1px]">
+        <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,114.2,189.6,98.66,236.43,86.29,281.33,63.95,321.39,56.44Z" class="fill-white"></path>
+        </svg>
+    </div>
+    
+    <footer class="bg-white text-gray-600 pt-12 pb-8 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <div class="md:col-span-1 text-center sm:text-left">
+                <a href="index.html" class="flex items-center justify-center sm:justify-start mb-6 group">
+                    <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-12 sm:h-14 w-auto transform group-hover:scale-105 transition-transform">
+                </a>
+                <p class="text-gray-500 font-medium leading-relaxed">
+                    Partner terbaik untuk persiapan olimpiade matematika Anda. Kami membantu Anda mencapai prestasi tertinggi dengan cara yang menyenangkan!
+                </p>
+                <div class="flex justify-center sm:justify-start space-x-4 mt-6">
+                    <a href="#" class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259 014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Explore</h4>
+                <ul class="space-y-4 font-bold">
+                    <li><a href="about-us.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">About Us</a></li>
+                    <li><a href="kelas-aktif.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Our Classes</a></li>
+                    <li><a href="store.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Store</a></li>
+                    <li><a href="hall-of-fame.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Hall of Fame</a></li>
+                </ul>
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Programs</h4>
+                <ul class="space-y-4 font-bold">
+                    <li><a href="private-class.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">👤 Kelas Private</a></li>
+                    <li><a href="kelas-aktif.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">👥 Kelas Semi Private</a></li>
+                    <li><a href="index.html#grup-besar" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">🏛️ Kelas Grup Besar</a></li>
+                </ul>
+            </div>
+
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Get In Touch</h4>
+                <div class="space-y-4 font-bold flex flex-col items-center sm:items-start">
+                    <div class="flex items-start gap-3">
+                        <span class="text-gold text-xl">📍</span>
+                        <span class="text-gray-500">Perum Griya Permata Alam Blok C-34,<br>Karangploso, Malang.</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-gold text-xl">📞</span>
+                        <span class="text-gray-500">+62 896-3131-2828</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-gold text-xl">✉️</span>
+                        <span class="text-gray-500">bimbel.mathematalk@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-12 pt-8 border-t-2 border-cream flex flex-col md:flex-row items-center justify-between">
+            <div class="text-gray-600 font-bold text-sm mb-4 md:mb-0">
+                &copy; 2026 <span class="text-navy">Mathematalk</span>. All rights reserved.
+            </div>
+            <div class="flex gap-6 text-sm font-bold text-gray-600">
+                <a href="#" class="hover:text-gold transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-gold transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <div
+    x-data="{
+        messages: [],
+        remove(id) {
+            this.messages = this.messages.filter(m => m.id !== id)
+        },
+        add(message, type = 'success', duration = 3000) {
+            console.log('Toast add called:', { message, type, duration });
+            const id = Date.now()
+            this.messages.push({ id, message, type })
+            // Only auto-remove if duration is a positive number
+            if (duration && duration > 0) {
+                setTimeout(() => this.remove(id), duration)
+            }
+        }
+    }"
+    @toast.window="add($event.detail.message, $event.detail.type, $event.detail.duration)"
+    class="fixed top-6 right-6 z-[100] flex flex-col space-y-3 pointer-events-none max-w-md"
+>
+    <template x-for="msg in messages" :key="msg.id">
+        <div
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-x-full opacity-0"
+            x-transition:enter-end="translate-x-0 opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="translate-x-full opacity-0"
+            :class="{
+                'bg-green-600': msg.type === 'success',
+                'bg-red-600': msg.type === 'error',
+                'bg-yellow-500': msg.type === 'warning',
+                'bg-blue-600': msg.type === 'info'
+            }"
+            class="pointer-events-auto px-6 py-4 rounded-lg text-white shadow-2xl flex items-center space-x-3 font-medium backdrop-blur-sm bg-opacity-95 animate-pulse-once"
+        >
+            <span x-text="{
+                'success': '✅',
+                'error': '❌',
+                'warning': '⚠️',
+                'info': 'ℹ️'
+            }[msg.type] || '✅'" class="text-lg flex-shrink-0"></span>
+            <p x-text="msg.message" class="flex-1 text-sm md:text-base"></p>
+            <button @click="remove(msg.id)" class="ml-2 hover:opacity-80 transition opacity-70 hover:opacity-100 flex-shrink-0 text-lg">✕</button>
+        </div>
+    </template>
+</div>
+    <script src="js/app.js"></script>
+    <script src="js/registration/student-registration.js"></script>
+        <script>
+document.addEventListener('alpine:init', () => {
+    Alpine.data('kelasAktif', () => ({
+        searchQuery: '',
+        selectedKategori: '',
+        selectedLevel: '',
+        loading: false,
+        waNumber: '6289631322828',
+        kelasData: [],
+        currentPage: 1,
+        currentPageWithDate: 1,
+        currentPageWithoutDate: 1,
+        perPage: 9,
+        async init() {
+            // Check for category and type filters in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const kategoriParam = urlParams.get('kategori') || urlParams.get('tipe_kelas');
+            const levelParam = urlParams.get('level') || urlParams.get('jenjang_kelas');
+
+            if (kategoriParam) {
+                // Map from legacy or simplified params
+                if (kategoriParam === 'Olimpiade') this.selectedKategori = 'olimpiade';
+                else if (kategoriParam === 'Matematika Dasar') this.selectedKategori = 'matematika_dasar';
+                else if (kategoriParam === 'Program TKA') this.selectedKategori = 'program_tka';
+                else this.selectedKategori = kategoriParam;
+            }
+            if (levelParam) this.selectedLevel = levelParam;
+
+            await this.fetchKelas();
+        },
+        async fetchKelas() {
+            this.loading = true;
+            try {
+                const res = await fetch('/api/v1/public/kelas');
+                const json = await res.json();
+                this.kelasData = json.data || [];
+                if (json.meta && json.meta.wa_admin_number) {
+                    this.waNumber = json.meta.wa_admin_number;
+                }
+            } catch (e) {
+                console.error('Error fetching kelas:', e);
+            }
+            this.loading = false;
+        },
+        get filteredKelas() {
+            return this.kelasData.filter(k => {
+                const tutorName = k.sesi_kelas?.[0]?.guru?.name || '';
+                const matchSearch = k.nama_kelas.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                                  tutorName.toLowerCase().includes(this.searchQuery.toLowerCase());
+                const matchKategori = this.selectedKategori === '' || k.tipe_kelas.value === this.selectedKategori;
+                const matchLevel = this.selectedLevel === '' || (k.jenjang_kelas && k.jenjang_kelas.value === this.selectedLevel);
+
+                return matchSearch && matchKategori && matchLevel;
+            });
+        },
+        get totalPages() {
+            return Math.ceil(this.filteredKelas.length / this.perPage);
+        },
+        get paginatedKelas() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.filteredKelas.slice(start, end);
+        },
+        get visiblePages() {
+            const pages = [];
+            const maxVisible = 5;
+            const totalPages = this.totalPages;
+
+            if (totalPages <= maxVisible) {
+                for (let i = 1; i <= totalPages; i++) {
+                    pages.push(i);
+                }
+            } else {
+                // Always show first page
+                pages.push(1);
+
+                if (this.currentPage <= 3) {
+                    // Near the beginning
+                    for (let i = 2; i <= 4; i++) pages.push(i);
+                    pages.push('...');
+                    pages.push(totalPages);
+                } else if (this.currentPage >= totalPages - 2) {
+                    // Near the end
+                    pages.push('...');
+                    for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
+                } else {
+                    // Middle
+                    pages.push('...');
+                    for (let i = this.currentPage - 1; i <= this.currentPage + 1; i++) pages.push(i);
+                    pages.push('...');
+                    pages.push(totalPages);
+                }
+            }
+
+            return pages;
+        },
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages && page !== '...') {
+                this.currentPage = page;
+                this.scrollToTop();
+            }
+        },
+        scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        isFull(kelas) {
+            const kapasitas = Number(kelas.kapasitas_max ?? 0);
+            const terdaftar = Number(kelas.current_students ?? 0);
+
+            return kapasitas > 0 && terdaftar >= kapasitas;
+        },
+        resetFilter() {
+            this.searchQuery = '';
+            this.selectedKategori = '';
+            this.selectedLevel = '';
+            this.currentPage = 1;
+            this.currentPageWithDate = 1;
+            this.currentPageWithoutDate = 1;
+        },
+        // Split filtered kelas into two groups: active and waiting list
+        // Kelas Aktif: Regular classes with dates
+        get kelasWithDate() {
+            return this.filteredKelas.filter(k => k.tanggal_mulai && !k.is_extended_class);
+        },
+        // Kelas Waiting List: Classes that need attention
+        // Show if: has students OR has waiting list OR is extended class
+        get kelasWithoutDate() {
+            return this.filteredKelas.filter(k => {
+                // Always show extended classes
+                if (k.is_extended_class) return true;
+                // Show classes without dates that have students or waiting list
+                if (!k.tanggal_mulai) {
+                    return (k.current_students > 0 || k.waiting_list_count > 0);
+                }
+                return false;
+            });
+        },
+        // Pagination for classes WITH dates
+        get totalPagesWithDate() {
+            return Math.ceil(this.kelasWithDate.length / this.perPage);
+        },
+        get paginatedWithDate() {
+            const start = (this.currentPageWithDate - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.kelasWithDate.slice(start, end);
+        },
+        get visiblePagesWithDate() {
+            return this.getVisiblePages(this.totalPagesWithDate, this.currentPageWithDate);
+        },
+        goToPageWithDate(page) {
+            if (page >= 1 && page <= this.totalPagesWithDate && page !== '...') {
+                this.currentPageWithDate = page;
+                this.scrollToTop();
+            }
+        },
+        // Pagination for classes WITHOUT dates
+        get totalPagesWithoutDate() {
+            return Math.ceil(this.kelasWithoutDate.length / this.perPage);
+        },
+        get paginatedWithoutDate() {
+            const start = (this.currentPageWithoutDate - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.kelasWithoutDate.slice(start, end);
+        },
+        get visiblePagesWithoutDate() {
+            return this.getVisiblePages(this.totalPagesWithoutDate, this.currentPageWithoutDate);
+        },
+        goToPageWithoutDate(page) {
+            if (page >= 1 && page <= this.totalPagesWithoutDate && page !== '...') {
+                this.currentPageWithoutDate = page;
+                this.scrollToTop();
+            }
+        },
+        // Helper to calculate visible pages
+        getVisiblePages(totalPages, currentPage) {
+            const pages = [];
+            const maxVisible = 5;
+
+            if (totalPages <= maxVisible) {
+                for (let i = 1; i <= totalPages; i++) {
+                    pages.push(i);
+                }
+            } else {
+                pages.push(1);
+
+                if (currentPage <= 3) {
+                    for (let i = 2; i <= 4; i++) pages.push(i);
+                    pages.push('...');
+                    pages.push(totalPages);
+                } else if (currentPage >= totalPages - 2) {
+                    pages.push('...');
+                    for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
+                } else {
+                    pages.push('...');
+                    for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
+                    pages.push('...');
+                    pages.push(totalPages);
+                }
+            }
+
+            return pages;
+        }
+    }))
+})
+</script>
+</body>
+</html>
+
+

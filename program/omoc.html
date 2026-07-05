@@ -1,0 +1,720 @@
+﻿<!DOCTYPE html>
+<html lang="id" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <title>OMOC Materi - Persiapan OSN (SD 3-5)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preload" as="style" href="build/assets/app.css" /><link rel="modulepreload" as="script" href="build/assets/app.js" /><link rel="stylesheet" href="build/assets/app.css" /><script type="module" src="build/assets/app.js"></script>    <script src="js/alpine.min.js" defer></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        .btn-kidzy {
+            @apply rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg inline-flex items-center justify-center;
+        }
+        .btn-kidzy-gold {
+            @apply bg-gold text-white hover:bg-opacity-90;
+        }
+        .btn-kidzy-navy {
+            @apply bg-navy text-white hover:bg-opacity-90;
+        }
+        .btn-kidzy-outline {
+            @apply border-2 border-navy text-navy hover:bg-navy hover:text-white;
+        }
+    </style>
+</head>
+<body class="bg-cream text-navy font-sans antialiased overflow-x-hidden">
+    
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20">
+            <div class="flex items-center">
+                <a href="index.html" class="flex-shrink-0 flex items-center group py-2">
+                    <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-10 sm:h-12 w-auto transform group-hover:scale-105 transition-transform drop-shadow-sm">
+                </a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Beranda</a>
+                <a href="about-us.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">About Us</a>
+                <!-- Kelas Aktif Dropdown -->
+                <div class="relative flex h-full items-center" x-data="{ dropdownOpen: false }" @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
+                    <button class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors inline-flex items-center gap-1">
+                        Kelas Aktif
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="dropdownOpen" x-transition x-cloak class="absolute left-1/2 -translate-x-1/2 top-full mt-0 w-64 rounded-2xl shadow-xl bg-white ring-1 ring-black/5 z-50 overflow-hidden border-2 border-cream">
+                        <div class="py-2">
+                            <a href="private-class.html" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">👤 Kelas Private</a>
+                            <a href="kelas-aktif.html" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">👥 Kelas Semi Private</a>
+                            <a href="index.html#grup-besar" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">🏛️ Kelas Grup Besar</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="store.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Store</a>
+                <a href="hall-of-fame.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Hall of Fame</a>
+                <a href="contact.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Contact</a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
+                                    <a href="login.html" class="text-navy font-black text-sm hover:text-gold transition-colors">Masuk</a>
+                    <a href="register.html" class="bg-gold text-white px-6 lg:px-8 py-2.5 rounded-full font-black text-sm hover:bg-navy transition-all duration-300 shadow-lg shadow-gold/20">
+                        Daftar
+                    </a>
+                
+                            </div>
+            
+            <div class="flex items-center md:hidden">
+                <button @click="open = !open" class="text-navy hover:text-gold focus:outline-none bg-cream p-2 rounded-xl transition-colors">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div x-show="open" x-cloak 
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-4"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="md:hidden bg-white border-t-2 border-cream px-4 pt-2 pb-6 space-y-2 shadow-xl rounded-b-3xl">
+        <a href="index.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Beranda</a>
+        <a href="about-us.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">About Us</a>
+        <div class="px-4 py-2 space-y-2 bg-cream rounded-xl">
+            <div class="text-xs font-black text-navy uppercase tracking-wider">Kelas Aktif</div>
+            <a href="private-class.html" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">👤 Kelas Private</a>
+            <a href="kelas-aktif.html" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">👥 Kelas Semi Private</a>
+            <a href="index.html#grup-besar" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">🏛️ Kelas Grup Besar</a>
+        </div>
+        <a href="store.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Store</a>
+        <a href="hall-of-fame.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Hall of Fame</a>
+        <a href="contact.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Contact</a>
+        <div class="pt-4 flex flex-col space-y-3">
+                            <a href="login.html" class="bg-navy text-white py-4 rounded-full text-center font-black shadow-lg">Masuk</a>
+                <a href="register.html" class="bg-gold text-white py-4 rounded-full text-center font-black shadow-lg">Daftar Sekarang</a>
+            
+                    </div>
+    </div>
+</nav>
+
+    <main class="min-h-screen">
+        <div class="bg-cream min-h-screen pb-24 relative" x-data="kelasDetailPage" data-kelas-id="4">
+    
+    <div x-show="toast.show"
+     x-transition:enter="transform transition ease-out duration-300"
+     x-transition:enter-start="translate-x-full opacity-0"
+     x-transition:enter-end="translate-x-0 opacity-100"
+     x-transition:leave="transform transition ease-in duration-300"
+     x-transition:leave-start="translate-x-0 opacity-100"
+     x-transition:leave-end="translate-x-full opacity-0"
+     :class="{
+         'toast-success': toast.type === 'success',
+         'toast-error': toast.type === 'error',
+         'toast-warning': toast.type === 'warning'
+     }"
+     class="toast-notification shadow-2xl rounded-2xl p-4 text-white">
+    <div class="flex items-start gap-3">
+        <div class="flex-shrink-0">
+            <svg x-show="toast.type === 'success'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <svg x-show="toast.type === 'error'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <svg x-show="toast.type === 'warning'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+        </div>
+        <div class="flex-1">
+            <p class="font-bold text-sm" x-text="toast.message"></p>
+        </div>
+        <button @click="toast.show = false" class="flex-shrink-0 hover:opacity-80 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+    
+    <div class="absolute top-40 left-10 w-32 h-32 bg-cyan/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-40 right-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+
+    
+    <div class="bg-navy pt-20 pb-32 px-4 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <nav class="flex mb-8 text-sm font-bold text-gold gap-2">
+            <a href="kelas-aktif.html" class="text-gold transition">Kelas Aktif</a>
+            <span>/</span>
+            <span class="text-gold">OMOC Materi - Persiapan OSN (SD 3-5)</span>
+        </nav>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <div class="flex gap-3 mb-6">
+                    <span
+                        class="px-4 py-1.5 bg-cyan/20 text-cyan text-xs font-black rounded-full uppercase tracking-wider">Reguler</span>
+                    <span
+                        class="px-4 py-1.5 bg-gold/20 text-gold text-xs font-black rounded-full uppercase tracking-wider">Grup Besar</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black text-white mb-4 leading-tight">OMOC Materi - Persiapan OSN (SD 3-5)</h1>
+                <p class="text-gray-500 text-xl font-medium max-w-2xl">Kelas grup besar OMOC untuk siswa SD kelas 3-5</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/20 min-w-[300px]">
+                <div class="text-gold text-sm font-bold uppercase mb-2">Investasi Pendidikan</div>
+                <div class="text-4xl font-black text-white mb-2">Rp 200.000
+                </div>
+                <div class="text-gold text-xs font-medium">Per paket program (8 sesi)</div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <div class="max-w-7xl mx-auto px-4 -mt-16 relative z-30">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            <div class="lg:col-span-2 space-y-12">
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div class="text-3xl mb-2">📅</div>
+        <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Mulai</div>
+        <div class="font-black text-navy text-sm">11 Jul 2026</div>
+    </div>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div class="text-3xl mb-2">⏱️</div>
+        <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Durasi</div>
+        <div class="font-black text-navy text-sm">90 Menit</div>
+    </div>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div class="text-3xl mb-2">📚</div>
+        <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Total Sesi</div>
+        <div class="font-black text-navy text-sm">8 Sesi</div>
+    </div>
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center">
+        <div class="text-3xl mb-2">🎓</div>
+        <div class="text-[10px] text-gray-600 font-bold uppercase mb-1">Jenjang</div>
+        <div class="font-black text-navy text-sm">-</div>
+    </div>
+</div>
+
+                
+                <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-gray-100">
+    <h2 class="text-3xl font-black text-navy mb-8 flex items-center gap-4">
+        <span class="w-12 h-12 bg-gold/10 rounded-2xl flex items-center justify-center text-2xl">📝</span>
+        Penjelasan Kelas
+    </h2>
+    <div class="prose prose-lg max-w-none text-gray-600 font-medium">
+        <p>Kelas grup besar OMOC untuk siswa SD kelas 3-5</p>
+        <h4 class="text-navy font-black mt-8 mb-4">Apa yang akan dipelajari?</h4>
+        <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+                <span class="text-gold mt-1">✓</span>
+                <span>Konsep dasar matematika yang disesuaikan dengan jenjang .</span>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-gold mt-1">✓</span>
+                <span>Latihan soal intensif dan pembahasan mendalam bersama tutor.</span>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="text-gold mt-1">✓</span>
+                <span>Tips & trick pengerjaan soal cepat dan akurat.</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+                
+                <div class="bg-white p-10 rounded-[3rem] shadow-sm border border-gray-100">
+    <h2 class="text-3xl font-black text-navy mb-8 flex items-center gap-4">
+        <span class="w-12 h-12 bg-cyan/10 rounded-2xl flex items-center justify-center text-2xl">👨‍🏫</span>
+        Tutor Pengajar
+    </h2>
+                <p class="text-gray-500 font-medium italic">Tutor akan segera dikonfirmasi.</p>
+    </div>
+            </div>
+
+            
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 space-y-6">
+                    
+                    <div class="bg-white p-8 rounded-[3rem] shadow-xl border border-gray-100 overflow-hidden relative">
+    <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full -mr-16 -mt-16"></div>
+
+    <h3 class="text-2xl font-black text-navy mb-6 relative z-10">Pendaftaran</h3>
+
+    
+    <div class="mb-8 relative z-10">
+    <div class="flex justify-between text-sm font-bold mb-2">
+        <span class="text-gray-600 uppercase">Kapasitas Kelas</span>
+        <span class="text-navy">0 / ∞ Siswa</span>
+    </div>
+    <div class="w-full h-4 bg-cream rounded-full overflow-hidden">
+                <div class="h-full bg-gold rounded-full" style="width: 0%"></div>
+    </div>
+            <p class="text-green-500 text-xs font-bold mt-2 uppercase tracking-wide">✨ Sisa 0 slot tersedia</p>
+    </div>
+
+                        
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-4">
+    <p class="text-sm font-bold text-amber-900">Masuk untuk melanjutkan checkout</p>
+    <p class="text-xs text-amber-800 mt-1">Silakan masuk ke akun Orang Tua untuk memilih anak dan melanjutkan ke halaman checkout.</p>
+</div>
+<a href="login.html" class="block w-full bg-gold text-white py-5 rounded-full text-center font-black text-xl shadow-lg hover:bg-navy transition-all duration-300">
+    Masuk untuk Checkout
+</a>
+            
+    <p class="text-center text-gray-600 text-xs font-bold mt-6 uppercase tracking-widest">Aman & Terpercaya</p>
+</div>
+
+                    
+                    <div class="bg-gold/10 p-8 rounded-[2.5rem] border border-gold/20 text-center">
+    <div class="text-3xl mb-4">💬</div>
+    <h4 class="text-lg font-black text-navy mb-2">Butuh Bantuan?</h4>
+    <p class="text-gray-600 text-sm font-medium mb-6">Konsultasikan kebutuhan belajar anak Anda dengan tim kami.</p>
+    <a href="https://wa.me/6289631322828" target="_blank" class="text-gold font-black hover:underline">Chat via WhatsApp &rarr;</a>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="waiting-list-dialog" x-show="showWaitingListDialog" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0" x-cloak
+        class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+
+        
+        <div id="waiting-list-dialog-backdrop" x-show="showWaitingListDialog" @click="showWaitingListDialog = false"
+            onclick="closeWaitingListDialog()" class="absolute inset-0 bg-black/50 backdrop-blur-sm">
+        </div>
+
+        
+        <div class="relative bg-white rounded-[2rem] shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            
+            <button @click="showWaitingListDialog = false" onclick="closeWaitingListDialog()"
+                class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            
+            <div class="bg-gradient-to-r from-cyan to-cyan/80 px-8 py-6 rounded-t-[2rem]">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-white">Daftar Waiting List</h3>
+                        <p class="text-white/80 text-sm">Kelas: OMOC Materi - Persiapan OSN (SD 3-5)</p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="p-8">
+                
+                <div class="bg-cyan/5 p-4 rounded-2xl mb-6 border border-cyan/10">
+                    <p class="text-navy font-medium text-sm">
+                        <span class="text-cyan">ℹ️</span> Anda akan bergabung ke antrian waiting list. Ketika ada slot
+                        kosong atau kelas extend dibuka, kami akan menghubungi Anda.
+                    </p>
+                </div>
+
+                
+                <form id="registration-form" action="#" method="POST">
+                    <input type="hidden" name="_token" value="" autocomplete="off">
+                    
+                                        <div class="mb-6 p-4 bg-yellow/5 border border-yellow/20 rounded-2xl">
+                        <p class="text-yellow-700 text-sm">
+                            <span class="font-bold">⚠️</span> Anda belum memiliki data anak.
+                        </p>
+                        <a href="ortu-anak.html"
+                            class="inline-block mt-3 px-4 py-2 bg-cyan text-white rounded-full text-sm font-bold hover:bg-yellow/80">
+                            + Tambah Data Anak
+                        </a>
+                    </div>
+                    
+                    
+                    <div class="mb-6">
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" name="accepted_terms" value="true" x-model="acceptTerms" class="w-5 h-5 text-cyan mt-1 rounded">
+                            <div class="flex-1">
+                                <p class="text-navy font-medium text-sm">
+                                    Saya menyetujui syarat & ketentuan waiting list
+                                </p>
+                            </div>
+                        </label>
+                    </div>
+
+                    
+                    <button type="submit" @click.prevent="joinWaitingList" :disabled="!acceptTerms || joining"
+                        class="w-full bg-cyan text-white py-4 rounded-full font-black text-lg shadow-lg hover:bg-navy disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300">
+                        <span x-show="!joining">Gabung Waiting List</span>
+                        <span x-show="joining">Memproses...</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <!-- Wavy Divider for Footer -->
+    <div class="w-full overflow-hidden leading-none translate-y-[1px]">
+        <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,114.2,189.6,98.66,236.43,86.29,281.33,63.95,321.39,56.44Z" class="fill-white"></path>
+        </svg>
+    </div>
+    
+    <footer class="bg-white text-gray-600 pt-12 pb-8 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <div class="md:col-span-1 text-center sm:text-left">
+                <a href="index.html" class="flex items-center justify-center sm:justify-start mb-6 group">
+                    <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-12 sm:h-14 w-auto transform group-hover:scale-105 transition-transform">
+                </a>
+                <p class="text-gray-500 font-medium leading-relaxed">
+                    Partner terbaik untuk persiapan olimpiade matematika Anda. Kami membantu Anda mencapai prestasi tertinggi dengan cara yang menyenangkan!
+                </p>
+                <div class="flex justify-center sm:justify-start space-x-4 mt-6">
+                    <a href="#" class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259 014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Explore</h4>
+                <ul class="space-y-4 font-bold">
+                    <li><a href="about-us.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">About Us</a></li>
+                    <li><a href="kelas-aktif.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Our Classes</a></li>
+                    <li><a href="store.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Store</a></li>
+                    <li><a href="hall-of-fame.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Hall of Fame</a></li>
+                </ul>
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Programs</h4>
+                <ul class="space-y-4 font-bold">
+                    <li><a href="private-class.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">👤 Kelas Private</a></li>
+                    <li><a href="kelas-aktif.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">👥 Kelas Semi Private</a></li>
+                    <li><a href="index.html#grup-besar" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">🏛️ Kelas Grup Besar</a></li>
+                </ul>
+            </div>
+
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Get In Touch</h4>
+                <div class="space-y-4 font-bold flex flex-col items-center sm:items-start">
+                    <div class="flex items-start gap-3">
+                        <span class="text-gold text-xl">📍</span>
+                        <span class="text-gray-500">Perum Griya Permata Alam Blok C-34,<br>Karangploso, Malang.</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-gold text-xl">📞</span>
+                        <span class="text-gray-500">+62 896-3131-2828</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-gold text-xl">✉️</span>
+                        <span class="text-gray-500">bimbel.mathematalk@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-12 pt-8 border-t-2 border-cream flex flex-col md:flex-row items-center justify-between">
+            <div class="text-gray-600 font-bold text-sm mb-4 md:mb-0">
+                &copy; 2026 <span class="text-navy">Mathematalk</span>. All rights reserved.
+            </div>
+            <div class="flex gap-6 text-sm font-bold text-gray-600">
+                <a href="#" class="hover:text-gold transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-gold transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <div
+    x-data="{
+        messages: [],
+        remove(id) {
+            this.messages = this.messages.filter(m => m.id !== id)
+        },
+        add(message, type = 'success', duration = 3000) {
+            console.log('Toast add called:', { message, type, duration });
+            const id = Date.now()
+            this.messages.push({ id, message, type })
+            // Only auto-remove if duration is a positive number
+            if (duration && duration > 0) {
+                setTimeout(() => this.remove(id), duration)
+            }
+        }
+    }"
+    @toast.window="add($event.detail.message, $event.detail.type, $event.detail.duration)"
+    class="fixed top-6 right-6 z-[100] flex flex-col space-y-3 pointer-events-none max-w-md"
+>
+    <template x-for="msg in messages" :key="msg.id">
+        <div
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-x-full opacity-0"
+            x-transition:enter-end="translate-x-0 opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="translate-x-full opacity-0"
+            :class="{
+                'bg-green-600': msg.type === 'success',
+                'bg-red-600': msg.type === 'error',
+                'bg-yellow-500': msg.type === 'warning',
+                'bg-blue-600': msg.type === 'info'
+            }"
+            class="pointer-events-auto px-6 py-4 rounded-lg text-white shadow-2xl flex items-center space-x-3 font-medium backdrop-blur-sm bg-opacity-95 animate-pulse-once"
+        >
+            <span x-text="{
+                'success': '✅',
+                'error': '❌',
+                'warning': '⚠️',
+                'info': 'ℹ️'
+            }[msg.type] || '✅'" class="text-lg flex-shrink-0"></span>
+            <p x-text="msg.message" class="flex-1 text-sm md:text-base"></p>
+            <button @click="remove(msg.id)" class="ml-2 hover:opacity-80 transition opacity-70 hover:opacity-100 flex-shrink-0 text-lg">✕</button>
+        </div>
+    </template>
+</div>
+    <script src="js/app.js"></script>
+    <script src="js/registration/student-registration.js"></script>
+        <style>
+    .toast-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 350px;
+        max-width: 450px;
+        transform: translateX(100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .toast-notification.show {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .toast-success {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        border-left: 4px solid #047857;
+    }
+
+    .toast-error {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        border-left: 4px solid #b91c1c;
+    }
+
+    .toast-warning {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        border-left: 4px solid #b45309;
+    }
+</style>
+<script>
+    document.addEventListener('alpine:init', () => {
+    Alpine.data('kelasDetailPage', () => ({
+        loading: false,
+        showWaitingListDialog: false,
+        showAddToCartModal: false,
+        acceptTerms: false,
+        joining: false,
+        addingToCart: false,
+        waitingListTerms: '',
+        estimatedPosition: 0,
+        selectedSiswa: null,
+        cartNotes: '',
+        kelasId: null,
+        toast: {
+            show: false,
+            message: '',
+            type: 'success'
+        },
+        async init() {
+            const el = this.$el;
+            this.kelasId = parseInt(el.dataset.kelasId || 0);
+
+            try {
+                const res = await apiGet('/api/v1/waiting-list/terms');
+                if (res && res.data) {
+                    this.waitingListTerms = res.data.content;
+                }
+            } catch (error) {
+                // Silently fail
+            }
+        },
+        showToast(message, type = 'success') {
+            this.toast.message = message;
+            this.toast.type = type;
+            this.toast.show = true;
+            setTimeout(() => {
+                this.toast.show = false;
+            }, 3000);
+        },
+        openAddToCartModal() {
+            this.showAddToCartModal = true;
+        },
+        openWaitingListDialog() {
+            this.showWaitingListDialog = true;
+        },
+        async addToCart() {
+            const siswaId = document.querySelector('input[name="siswa_id"]:checked')?.value;
+
+            if (!siswaId) {
+                this.showToast('Silakan pilih anak terlebih dahulu', 'warning');
+                return;
+            }
+
+            this.addingToCart = true;
+
+            try {
+                const response = await fetch('/api/v1/cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]')?.getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        kelas_id: this.kelasId,
+                        siswa_id: siswaId,
+                        notes: this.cartNotes
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    this.showAddToCartModal = false;
+                    this.showToast('Berhasil menambahkan ke keranjang!', 'success');
+                    document.dispatchEvent(new Event('cart-updated'));
+                    document.querySelectorAll('input[name="siswa_id"]').forEach(el => el.checked = false);
+                    this.cartNotes = '';
+                } else {
+                    this.showToast(result.message || 'Gagal menambahkan ke keranjang', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                this.showToast('Terjadi kesalahan. Silakan coba lagi.', 'error');
+            } finally {
+                this.addingToCart = false;
+            }
+        },
+        async enrollDirect() {
+            const siswaId = document.querySelector('input[name="siswa_id"]:checked')?.value;
+
+            if (!siswaId) {
+                this.showToast('Silakan pilih anak terlebih dahulu', 'warning');
+                return;
+            }
+
+            this.loading = true;
+
+            try {
+                // Get auth token
+                const token = localStorage.getItem('mathematalk_token');
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]')?.getAttribute('content')
+                };
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                }
+
+                const response = await fetch('/api/v1/enroll/direct', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        kelas_id: this.kelasId,
+                        siswa_id: siswaId
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    // Close modal
+                    this.showAddToCartModal = false;
+                    // Redirect to payment
+                    window.location.href = `/pembayaran/${result.data.invoice_id}/initiate`;
+                } else if (result.data && result.data.invoice_id) {
+                    // User already has invoice, redirect to existing invoice payment
+                    this.showAddToCartModal = false;
+                    this.showToast(result.message, 'warning');
+                    setTimeout(() => {
+                        window.location.href = `/pembayaran/${result.data.invoice_id}/initiate`;
+                    }, 2000);
+                } else {
+                    this.showToast(result.message || 'Gagal melakukan pendaftaran langsung', 'error');
+                    this.loading = false;
+                }
+            } catch (error) {
+                this.showToast('Terjadi kesalahan. Silakan coba lagi.', 'error');
+                this.loading = false;
+            }
+        },
+        async joinWaitingList() {
+            if (!this.acceptTerms) return;
+
+            this.joining = true;
+            try {
+                const form = document.getElementById('registration-form');
+                const formData = new FormData(form);
+                formData.append('accepted_terms', 'true');
+
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    this.showWaitingListDialog = false;
+                    this.acceptTerms = false;
+                    this.showToast('Berhasil bergabung ke waiting list! Anda akan diberitahu saat ada slot kosong.', 'success');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    this.showToast(data.message || 'Gagal bergabung ke waiting list', 'error');
+                }
+            } catch (error) {
+                this.showToast('Terjadi kesalahan. Silakan coba lagi.', 'error');
+            } finally {
+                this.joining = false;
+            }
+        }
+    }))
+})
+</script>
+</body>
+</html>
+
+

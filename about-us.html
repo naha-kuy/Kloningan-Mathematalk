@@ -1,0 +1,495 @@
+﻿<!DOCTYPE html>
+<html lang="id" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <title>Tentang Kami - Mathematalk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preload" as="style" href="build/assets/app.css" /><link rel="modulepreload" as="script" href="build/assets/app.js" /><link rel="stylesheet" href="build/assets/app.css" /><script type="module" src="build/assets/app.js"></script>    <script src="js/alpine.min.js" defer></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        .btn-kidzy {
+            @apply rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg inline-flex items-center justify-center;
+        }
+        .btn-kidzy-gold {
+            @apply bg-gold text-white hover:bg-opacity-90;
+        }
+        .btn-kidzy-navy {
+            @apply bg-navy text-white hover:bg-opacity-90;
+        }
+        .btn-kidzy-outline {
+            @apply border-2 border-navy text-navy hover:bg-navy hover:text-white;
+        }
+    </style>
+</head>
+<body class="bg-cream text-navy font-sans antialiased overflow-x-hidden">
+    
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300" x-data="{ open: false }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20">
+            <div class="flex items-center">
+                <a href="index.html" class="flex-shrink-0 flex items-center group py-2">
+                    <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-10 sm:h-12 w-auto transform group-hover:scale-105 transition-transform drop-shadow-sm">
+                </a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Beranda</a>
+                <a href="about-us.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">About Us</a>
+                <!-- Kelas Aktif Dropdown -->
+                <div class="relative flex h-full items-center" x-data="{ dropdownOpen: false }" @mouseenter="dropdownOpen = true" @mouseleave="dropdownOpen = false">
+                    <button class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors inline-flex items-center gap-1">
+                        Kelas Aktif
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div x-show="dropdownOpen" x-transition x-cloak class="absolute left-1/2 -translate-x-1/2 top-full mt-0 w-64 rounded-2xl shadow-xl bg-white ring-1 ring-black/5 z-50 overflow-hidden border-2 border-cream">
+                        <div class="py-2">
+                            <a href="private-class.html" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">👤 Kelas Private</a>
+                            <a href="kelas-aktif.html" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">👥 Kelas Semi Private</a>
+                            <a href="index.html#grup-besar" class="block px-6 py-3 text-sm font-bold text-gray-600 hover:text-gold hover:bg-cream transition-colors">🏛️ Kelas Grup Besar</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="store.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Store</a>
+                <a href="hall-of-fame.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Hall of Fame</a>
+                <a href="contact.html" class="text-gray-600 hover:text-gold font-bold text-sm lg:text-base transition-colors">Contact</a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-4 lg:space-x-6">
+                                    <a href="login.html" class="text-navy font-black text-sm hover:text-gold transition-colors">Masuk</a>
+                    <a href="register.html" class="bg-gold text-white px-6 lg:px-8 py-2.5 rounded-full font-black text-sm hover:bg-navy transition-all duration-300 shadow-lg shadow-gold/20">
+                        Daftar
+                    </a>
+                
+                            </div>
+            
+            <div class="flex items-center md:hidden">
+                <button @click="open = !open" class="text-navy hover:text-gold focus:outline-none bg-cream p-2 rounded-xl transition-colors">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div x-show="open" x-cloak 
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-4"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         class="md:hidden bg-white border-t-2 border-cream px-4 pt-2 pb-6 space-y-2 shadow-xl rounded-b-3xl">
+        <a href="index.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Beranda</a>
+        <a href="about-us.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">About Us</a>
+        <div class="px-4 py-2 space-y-2 bg-cream rounded-xl">
+            <div class="text-xs font-black text-navy uppercase tracking-wider">Kelas Aktif</div>
+            <a href="private-class.html" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">👤 Kelas Private</a>
+            <a href="kelas-aktif.html" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">👥 Kelas Semi Private</a>
+            <a href="index.html#grup-besar" class="block pl-2 py-2 text-sm font-bold text-gray-600 hover:text-gold">🏛️ Kelas Grup Besar</a>
+        </div>
+        <a href="store.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Store</a>
+        <a href="hall-of-fame.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Hall of Fame</a>
+        <a href="contact.html" class="block px-4 py-3 text-base font-bold text-gray-700 hover:bg-cream hover:text-gold rounded-xl">Contact</a>
+        <div class="pt-4 flex flex-col space-y-3">
+                            <a href="login.html" class="bg-navy text-white py-4 rounded-full text-center font-black shadow-lg">Masuk</a>
+                <a href="register.html" class="bg-gold text-white py-4 rounded-full text-center font-black shadow-lg">Daftar Sekarang</a>
+            
+                    </div>
+    </div>
+</nav>
+
+    <main class="min-h-screen">
+        <div class="bg-cream min-h-screen pb-24 relative overflow-hidden" x-data="{
+    gurus: [],
+    loading: true,
+    async init() {
+        try {
+            const res = await apiGet('/api/v1/public/guru');
+            if (res && res.data) {
+                this.gurus = res.data;
+            }
+        } catch(e) {
+            console.error('Error fetching gurus:', e);
+        }
+        this.loading = false;
+    }
+}">
+    <!-- Decorative background elements -->
+    <div class="absolute top-40 left-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-40 right-10 w-64 h-64 bg-cyan/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/40 rounded-full blur-3xl"></div>
+
+    <!-- Hero Section: Section 1 -->
+    <div class="bg-navy pt-20 pb-32 px-4 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full -mr-20 -mt-20"></div>
+        <div class="absolute bottom-0 left-0 w-40 h-40 bg-white/5 rounded-full -ml-10 -mb-10"></div>
+        
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <div class="inline-block mb-6 px-6 py-2 bg-gold/20 rounded-full border border-gold/30 backdrop-blur-sm">
+                <span class="text-gold font-black uppercase tracking-widest text-sm">Cerita Kami</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-8 leading-tight">MATHEMATALK ADALAH...</h1>
+            <div class="max-w-4xl mx-auto space-y-6">
+                <p class="text-white text-lg md:text-xl font-medium leading-relaxed">
+                    Mathematalk adalah pusat pelatihan matematika terpadu yang lahir dari dedikasi lebih dari satu dekade di dunia olimpiade. Bermula dari bimbingan tatap muka di Jawa Timur sejak 2015, kami kini menjadi platform pendidikan nasional yang telah mencetak ratusan juara di seluruh Indonesia.
+                </p>
+                <p class="text-white text-lg md:text-xl font-medium leading-relaxed">
+                    Melalui rebranding di Desember 2025, Mathematalk berkomitmen untuk mendigitalisasi setiap jejak prestasi siswa dan menghadirkan bimbingan yang profesional, terorganisir, serta mudah diakses oleh seluruh talenta matematika Indonesia.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Wavy Divider Transition -->
+    <div class="w-full overflow-hidden leading-none -mt-[50px] relative z-20">
+        <svg class="relative block w-full h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,114.2,189.6,98.66,236.43,86.29,281.33,63.95,321.39,56.44Z" class="fill-[#FFF9F2]"></path>
+        </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 -mt-10 relative z-30 space-y-24">
+        
+        <!-- Section 2 & 3: Visi & Misi -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Visi -->
+            <div class="bg-white p-10 md:p-14 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-bl-[100px] -z-0"></div>
+                <div class="w-24 h-24 bg-gold/20 rounded-full flex items-center justify-center text-5xl mb-8 relative z-10 group-hover:scale-110 transition-transform duration-500">
+                    🔭
+                </div>
+                <h2 class="text-3xl font-black text-navy mb-6 relative z-10">VISI</h2>
+                <p class="text-gray-600 font-bold text-xl leading-relaxed relative z-10">"Menjadi platform pendidikan matematika terdepan yang mengarsipkan dan merayakan setiap prestasi siswa, serta mengantarkan generasi juara dari bangku sekolah hingga masa depan gemilang."</p>
+            </div>
+
+            <!-- Misi -->
+            <div class="bg-white p-10 md:p-14 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500">
+                <div class="absolute top-0 left-0 w-32 h-32 bg-cyan/10 rounded-br-[100px] -z-0"></div>
+                <div class="w-24 h-24 bg-cyan/20 rounded-full flex items-center justify-center text-5xl mb-8 relative z-10 group-hover:scale-110 transition-transform duration-500">
+                    🚀
+                </div>
+                <h2 class="text-3xl font-black text-navy mb-6 relative z-10">MISI</h2>
+                <ul class="text-gray-600 font-medium text-lg leading-relaxed text-left space-y-6 relative z-10">
+                    <li class="flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-full bg-cyan/20 text-cyan flex items-center justify-center font-black shrink-0 mt-1">1</span>
+                        <div>
+                            <strong class="text-navy">Digitalisasi Jejak Prestasi:</strong>
+                            <p class="mt-1">Mengarsipkan setiap kemenangan siswa sebagai bentuk apresiasi dan sumber inspirasi bagi generasi berikutnya.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-full bg-cyan/20 text-cyan flex items-center justify-center font-black shrink-0 mt-1">2</span>
+                        <div>
+                            <strong class="text-navy">Aksesibilitas Nasional:</strong>
+                            <p class="mt-1">Menghadirkan bimbingan berkualitas tinggi yang mudah diakses oleh seluruh talenta matematika di Indonesia dan luar negeri.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-full bg-cyan/20 text-cyan flex items-center justify-center font-black shrink-0 mt-1">3</span>
+                        <div>
+                            <strong class="text-navy">Membangun Logika & Karakter:</strong>
+                            <p class="mt-1">Membangun logika, merayakan proses berpikir, dan mengawal langkah siswa menuju podium juara.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="w-10 h-10 rounded-full bg-cyan/20 text-cyan flex items-center justify-center font-black shrink-0 mt-1">4</span>
+                        <div>
+                            <strong class="text-navy">Kolaborasi Tentor Ahli:</strong>
+                            <p class="mt-1">Mencetak juara bersama tim pengajar berpengalaman dengan integritas tinggi dan rekam jejak terbukti.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4: Mengapa Memilih Kami -->
+        <div class="bg-navy rounded-[4rem] p-10 md:p-20 relative overflow-hidden shadow-2xl">
+            <div class="absolute -top-20 -right-20 w-80 h-80 bg-white/5 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-gold/10 rounded-full blur-2xl"></div>
+            
+            <div class="relative z-10">
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-16 text-center">Mengapa Memilih Kami?</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <!-- Feature 1 -->
+                    <div class="flex flex-col gap-6 group">
+                        <div class="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/about/3d_experience.png" alt="Pengalaman" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-gold mb-3 uppercase tracking-wide">Pengalaman 10+ Tahun</h3>
+                            <p class="text-gray-500 font-medium leading-relaxed">Track record nyata membimbing ratusan juara olimpiade tingkat Regional, Nasional, hingga Internasional sejak 2015.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="flex flex-col gap-6 group">
+                        <div class="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/about/3d_method.png" alt="Metode" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-gold mb-3 uppercase tracking-wide">Metode Terbukti Efektif</h3>
+                            <p class="text-gray-500 font-medium leading-relaxed">Rekomendasi dari mulut ke mulut orang tua juara yang terus mempercayakan putra-putrinya kepada kami dari SD hingga perguruan tinggi.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="flex flex-col gap-6 group">
+                        <div class="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/about/3d_tutors.png" alt="Tentor" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-gold mb-3 uppercase tracking-wide">Tim Tentor Berpengalaman</h3>
+                            <p class="text-gray-500 font-medium leading-relaxed">Kolaborasi dengan pengajar ahli yang memiliki integritas tinggi dan rekam jejak kompetisi gemilang.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="flex flex-col gap-6 group">
+                        <div class="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/about/3d_services.png" alt="Layanan" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-gold mb-3 uppercase tracking-wide">Layanan Lengkap & Fleksibel</h3>
+                            <ul class="text-gray-500 font-medium space-y-2 text-sm">
+                                <li class="flex gap-2"><span>•</span> <span><strong>Matematika Olimpiade:</strong> Pelatihan intensif</span></li>
+                                <li class="flex gap-2"><span>•</span> <span><strong>Matematika Dasar:</strong> Memperkuat konsep dasar sekolah</span></li>
+                                <li class="flex gap-2"><span>•</span> <span><strong>Program TKA:</strong> Evaluasi dan persiapan ujian kenaikan level</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Feature 5 -->
+                    <div class="flex flex-col gap-6 group">
+                        <div class="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/about/3d_online.png" alt="Online" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-gold mb-3 uppercase tracking-wide">Skala Nasional & Online</h3>
+                            <p class="text-gray-500 font-medium leading-relaxed">Dari tatap muka lokal kini menjangkau seluruh Indonesia dengan sistem pembelajaran online yang terorganisir.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 6 -->
+                    <div class="flex flex-col gap-6 group">
+                        <div class="w-24 h-24 flex items-center justify-center rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-500">
+                            <img src="images/about/3d_digital.png" alt="Digital" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-gold mb-3 uppercase tracking-wide">Digitalisasi Prestasi</h3>
+                            <p class="text-gray-500 font-medium leading-relaxed">Setiap kemenangan siswa diarsipkan sebagai apresiasi dan inspirasi bagi generasi berikutnya.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Tagline -->
+        <div class="py-12 border-y-4 border-gold/20 flex items-center justify-center">
+            <h2 class="text-4xl md:text-6xl font-black text-navy text-center uppercase tracking-tighter">
+                "Mengabadi Jejak, <span class="text-gold">Mencetak Juara!"</span>
+            </h2>
+        </div>
+
+        <!-- Section 6: Profile Tutor Kami -->
+        <section class="py-12">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-5xl font-black text-navy mb-4 italic">Tutor <span class="text-gold">Kami</span></h2>
+                <p class="text-gray-500 font-bold">Berdedikasi untuk mencetak generasi juara melalui proses belajar yang bermakna.</p>
+            </div>
+
+            <!-- Dynamic Tutor Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+                <!-- Loading State -->
+                <template x-if="loading">
+                    <template x-for="i in 4">
+                        <div class="animate-pulse flex flex-col items-center">
+                            <div class="w-48 h-48 bg-gray-200 rounded-full mb-6"></div>
+                            <div class="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                            <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                        </div>
+                    </template>
+                </template>
+
+                <!-- Data State -->
+                <template x-if="!loading">
+                    <template x-for="(guru, index) in gurus" :key="guru.id">
+                        <div class="flex flex-col items-center text-center group">
+                            <!-- Blob Image Container -->
+                            <div class="relative w-56 h-56 mb-8">
+                                <!-- Dynamic Blob Background Colors -->
+                                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" 
+                                    class="absolute inset-0 w-full h-full transform scale-110 group-hover:scale-125 transition-transform duration-500"
+                                    :class="{
+                                        'text-cyan/20': index % 4 === 0,
+                                        'text-gold/20': index % 4 === 1,
+                                        'text-green-500/10': index % 4 === 2,
+                                        'text-yellow-500/10': index % 4 === 3
+                                    }">
+                                    <path fill="currentColor" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.5,90,-16.2,88.5,-0.9C87,14.4,81.4,28.8,73.6,41.9C65.8,55,55.8,66.8,43.1,75.3C30.4,83.8,15.2,89,0,89C-15.2,89,-30.4,83.8,-42.6,74.9C-54.8,66,-64.1,53.4,-72.4,39.9C-80.7,26.4,-88,13.2,-87.3,0.4C-86.6,-12.4,-77.9,-24.8,-69.3,-36.5C-60.7,-48.2,-52.2,-59.2,-40.4,-67.6C-28.6,-76,-14.3,-81.8,0.7,-83C15.7,-84.2,30.6,-83.6,44.7,-76.4Z" transform="translate(100 100)" />
+                                </svg>
+                                
+                                <img :src="guru.avatar || 'https://ui-avatars.com/api/?name=' + guru.name + '&background=0D2B5E&color=fff'" 
+                                    :alt="guru.name" 
+                                    class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-lg group-hover:-translate-y-2 transition-transform duration-500">
+                            </div>
+
+                            <h3 class="text-xl font-black text-navy mb-1" x-text="guru.name"></h3>
+                            <p class="text-gray-500 font-bold text-sm uppercase tracking-wide" x-text="guru.gelar || 'Pengajar Ahli'"></p>
+                            <template x-if="guru.prestasi && guru.prestasi.length > 0">
+                                <p class="text-gold font-bold text-xs mt-2 italic" x-text="guru.prestasi[0]"></p>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+            </div>
+            
+            <!-- Empty State -->
+            <template x-if="!loading && gurus.length === 0">
+                <div class="text-center py-20 bg-white rounded-[3rem] border-2 border-dashed border-gray-100">
+                    <p class="text-gray-600 font-bold">Data tutor sedang dipersiapkan.</p>
+                </div>
+            </template>
+        </section>
+
+    </div>
+</div>
+    </main>
+
+    <!-- Wavy Divider for Footer -->
+    <div class="w-full overflow-hidden leading-none translate-y-[1px]">
+        <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,114.2,189.6,98.66,236.43,86.29,281.33,63.95,321.39,56.44Z" class="fill-white"></path>
+        </svg>
+    </div>
+    
+    <footer class="bg-white text-gray-600 pt-12 pb-8 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <div class="md:col-span-1 text-center sm:text-left">
+                <a href="index.html" class="flex items-center justify-center sm:justify-start mb-6 group">
+                    <img src="images/logo_light.png" alt="Mathematalk Logo" class="h-12 sm:h-14 w-auto transform group-hover:scale-105 transition-transform">
+                </a>
+                <p class="text-gray-500 font-medium leading-relaxed">
+                    Partner terbaik untuk persiapan olimpiade matematika Anda. Kami membantu Anda mencapai prestasi tertinggi dengan cara yang menyenangkan!
+                </p>
+                <div class="flex justify-center sm:justify-start space-x-4 mt-6">
+                    <a href="#" class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-cream flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259 014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Explore</h4>
+                <ul class="space-y-4 font-bold">
+                    <li><a href="about-us.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">About Us</a></li>
+                    <li><a href="kelas-aktif.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Our Classes</a></li>
+                    <li><a href="store.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Store</a></li>
+                    <li><a href="hall-of-fame.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">Hall of Fame</a></li>
+                </ul>
+            </div>
+            
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Programs</h4>
+                <ul class="space-y-4 font-bold">
+                    <li><a href="private-class.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">👤 Kelas Private</a></li>
+                    <li><a href="kelas-aktif.html" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">👥 Kelas Semi Private</a></li>
+                    <li><a href="index.html#grup-besar" class="hover:text-gold hover:translate-x-1 inline-block transition-transform">🏛️ Kelas Grup Besar</a></li>
+                </ul>
+            </div>
+
+            <div class="text-center sm:text-left">
+                <h4 class="font-black text-navy text-xl mb-6">Get In Touch</h4>
+                <div class="space-y-4 font-bold flex flex-col items-center sm:items-start">
+                    <div class="flex items-start gap-3">
+                        <span class="text-gold text-xl">📍</span>
+                        <span class="text-gray-500">Perum Griya Permata Alam Blok C-34,<br>Karangploso, Malang.</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-gold text-xl">📞</span>
+                        <span class="text-gray-500">+62 896-3131-2828</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-gold text-xl">✉️</span>
+                        <span class="text-gray-500">bimbel.mathematalk@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-12 pt-8 border-t-2 border-cream flex flex-col md:flex-row items-center justify-between">
+            <div class="text-gray-600 font-bold text-sm mb-4 md:mb-0">
+                &copy; 2026 <span class="text-navy">Mathematalk</span>. All rights reserved.
+            </div>
+            <div class="flex gap-6 text-sm font-bold text-gray-600">
+                <a href="#" class="hover:text-gold transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-gold transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <div
+    x-data="{
+        messages: [],
+        remove(id) {
+            this.messages = this.messages.filter(m => m.id !== id)
+        },
+        add(message, type = 'success', duration = 3000) {
+            console.log('Toast add called:', { message, type, duration });
+            const id = Date.now()
+            this.messages.push({ id, message, type })
+            // Only auto-remove if duration is a positive number
+            if (duration && duration > 0) {
+                setTimeout(() => this.remove(id), duration)
+            }
+        }
+    }"
+    @toast.window="add($event.detail.message, $event.detail.type, $event.detail.duration)"
+    class="fixed top-6 right-6 z-[100] flex flex-col space-y-3 pointer-events-none max-w-md"
+>
+    <template x-for="msg in messages" :key="msg.id">
+        <div
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="translate-x-full opacity-0"
+            x-transition:enter-end="translate-x-0 opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="translate-x-full opacity-0"
+            :class="{
+                'bg-green-600': msg.type === 'success',
+                'bg-red-600': msg.type === 'error',
+                'bg-yellow-500': msg.type === 'warning',
+                'bg-blue-600': msg.type === 'info'
+            }"
+            class="pointer-events-auto px-6 py-4 rounded-lg text-white shadow-2xl flex items-center space-x-3 font-medium backdrop-blur-sm bg-opacity-95 animate-pulse-once"
+        >
+            <span x-text="{
+                'success': '✅',
+                'error': '❌',
+                'warning': '⚠️',
+                'info': 'ℹ️'
+            }[msg.type] || '✅'" class="text-lg flex-shrink-0"></span>
+            <p x-text="msg.message" class="flex-1 text-sm md:text-base"></p>
+            <button @click="remove(msg.id)" class="ml-2 hover:opacity-80 transition opacity-70 hover:opacity-100 flex-shrink-0 text-lg">✕</button>
+        </div>
+    </template>
+</div>
+    <script src="js/app.js"></script>
+    <script src="js/registration/student-registration.js"></script>
+        </body>
+</html>
+
+
