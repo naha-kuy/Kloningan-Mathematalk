@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -23,52 +23,87 @@ export default function RegisterPage() {
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ name: form.name.trim(), email: form.email.trim(), phone: form.phone.trim(), password: form.password, password_confirmation: form.password_confirmation }),
       });
       const data = await res.json();
       if (data.success) {
-        router.push('/login');
+        router.push('/login?registered=1');
       } else {
         setError(data.message || 'Pendaftaran gagal');
       }
-    } catch { setError('Terjadi kesalahan'); }
+    } catch { setError('Terjadi kesalahan. Silakan coba lagi.'); }
     finally { setLoading(false); }
   };
 
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-navy flex items-center justify-center p-4">
-        <div className="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl overflow-hidden">
-          <div className="p-8 md:p-12">
-            <div className="text-center mb-10">
-              <h1 className="text-3xl font-black text-navy tracking-tight">MATHEMATALK</h1>
-              <p className="text-gray-600 font-medium mt-2">Buat akun orang tua</p>
+      <main className="min-h-screen bg-gradient-to-br from-[#0D2B5E] via-[#0D2B5E] to-[#1a3a7a] flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+            <div className="text-center mb-8">
+              <img src="/images/logo_light.png" alt="Mathematalk" className="h-10 w-auto mx-auto mb-4" />
+              <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D2B5E]">Daftar Akun Baru</h1>
+              <p className="text-gray-500 text-sm mt-1">Bergabung dengan Mathematalk</p>
             </div>
-            {error && <div className="bg-red-50 text-red-600 text-sm font-bold px-4 py-3 rounded-2xl mb-6">{error}</div>}
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {[ 
-                { label: 'Nama Lengkap', key: 'name', type: 'text', placeholder: 'Nama Anda' },
-                { label: 'Email', key: 'email', type: 'email', placeholder: 'nama@email.com' },
-                { label: 'No. WhatsApp', key: 'phone', type: 'tel', placeholder: '0812xxxx' },
-                { label: 'Password', key: 'password', type: 'password', placeholder: 'Minimal 8 karakter' },
-                { label: 'Konfirmasi Password', key: 'password_confirmation', type: 'password', placeholder: 'Ulangi password' },
-              ].map((f) => (
-                <div key={f.key}>
-                  <label className="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">{f.label}</label>
-                  <input type={f.type} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
-                    required className="w-full bg-gray-50 text-gray-800 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium placeholder-gray-400"
-                    placeholder={f.placeholder} />
-                </div>
-              ))}
+
+            {error && (
+              <div className="bg-red-100 border border-red-300 text-red-700 rounded-xl px-4 py-3 text-sm mb-6 flex items-start gap-2">
+                <svg className="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+                <span>{error}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+              <div>
+                <label htmlFor="r-name" className="block text-sm font-bold text-gray-700 mb-1.5">Nama Lengkap <span className="text-red-500">*</span></label>
+                <input id="r-name" type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="Nama lengkap Anda"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-transparent transition-all" />
+              </div>
+              <div>
+                <label htmlFor="r-email" className="block text-sm font-bold text-gray-700 mb-1.5">Email <span className="text-red-500">*</span></label>
+                <input id="r-email" type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="nama@email.com"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-transparent transition-all" />
+              </div>
+              <div>
+                <label htmlFor="r-phone" className="block text-sm font-bold text-gray-700 mb-1.5">No. WhatsApp <span className="text-red-500">*</span></label>
+                <input id="r-phone" type="tel" required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  placeholder="08xxxxxxxxxx"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-transparent transition-all" />
+              </div>
+              <div>
+                <label htmlFor="r-password" className="block text-sm font-bold text-gray-700 mb-1.5">Password <span className="text-red-500">*</span></label>
+                <input id="r-password" type="password" required minLength={8} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  placeholder="Minimal 8 karakter"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-transparent transition-all" />
+              </div>
+              <div>
+                <label htmlFor="r-password-confirm" className="block text-sm font-bold text-gray-700 mb-1.5">Konfirmasi Password <span className="text-red-500">*</span></label>
+                <input id="r-password-confirm" type="password" required value={form.password_confirmation} onChange={(e) => setForm({ ...form, password_confirmation: e.target.value })}
+                  placeholder="Ulangi password"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F59E0B] focus:border-transparent transition-all" />
+              </div>
               <button type="submit" disabled={loading}
-                className="w-full bg-gold text-white py-4 rounded-2xl font-bold text-lg hover:bg-navy transition shadow-xl shadow-gold/20 disabled:opacity-50">
-                {loading ? 'Memproses...' : 'Daftar Sekarang'}
+                className="w-full bg-[#F59E0B] text-white py-3.5 rounded-xl font-bold text-base hover:bg-[#0D2B5E] transition-all duration-300 shadow-lg shadow-[#F59E0B]/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                {loading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Mendaftarkan...
+                  </>
+                ) : 'Daftar Sekarang'}
               </button>
             </form>
-            <div className="mt-6 text-center text-gray-600 text-sm">
-              Sudah punya akun?{' '}
-              <Link href="/login" className="text-gold font-bold hover:underline">Masuk</Link>
+
+            <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+              <p className="text-sm text-gray-500">
+                Sudah punya akun?{' '}
+                <Link href="/login" className="text-[#F59E0B] font-bold hover:underline">Masuk</Link>
+              </p>
             </div>
           </div>
         </div>
