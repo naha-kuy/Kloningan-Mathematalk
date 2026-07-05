@@ -8,10 +8,7 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "api/index.js" },
-    { "src": "/build/assets/(.*)", "dest": "/build/assets/$1" },
-    { "src": "/images/(.*)", "dest": "/images/$1" },
-    { "src": "/js/(.*)", "dest": "/js/$1" },
-    { "src": "/program/(.*)", "dest": "/program/$1" },
-    { "src": "/(.*)", "dest": "/$1" }
+    { "handle": "filesystem" },
+    { "src": "/program/(.*)", "dest": "/program/$1" }
   ]
 }
