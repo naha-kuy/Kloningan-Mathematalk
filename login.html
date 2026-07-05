@@ -118,24 +118,55 @@
 
             
             
-            <form method="POST" action="/login" class="space-y-6">
-                <input type="hidden" name="_token" value="" autocomplete="off">                                <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Email Address</label>
-                    <input type="email" name="email" value="" required
-                           class="w-full bg-gray-50 text-gray-800 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium placeholder-gray-400"
-                           placeholder="nama@email.com">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Password</label>
-                    <input type="password" name="password" required
-                           class="w-full bg-gray-50 text-gray-800 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium placeholder-gray-400"
-                           placeholder="••••••••">
-                </div>
-                <button type="submit"
-                        class="w-full bg-navy text-white py-4 rounded-2xl font-bold text-lg hover:bg-opacity-90 transition shadow-xl shadow-navy/20">
-                    Masuk ke Akun
-                </button>
-            </form>
+            <div x-data="{
+                email: '',
+                password: '',
+                loading: false,
+                error: '',
+                async submit() {
+                    this.loading = true;
+                    this.error = '';
+                    try {
+                        const res = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: this.email, password: this.password })
+                        });
+                        const data = await res.json();
+                        if (data.success && data.data.token) {
+                            localStorage.setItem('mathematalk_token', data.data.token);
+                            window.location.href = 'ortu-dashboard.html';
+                        } else {
+                            this.error = data.message || 'Email atau password salah';
+                        }
+                    } catch (e) {
+                        this.error = 'Terjadi kesalahan. Silakan coba lagi.';
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            }">
+                <div x-show="error" x-text="error" class="bg-red-50 text-red-600 text-sm font-bold px-4 py-3 rounded-2xl mb-6" x-cloak></div>
+                <form @submit.prevent="submit" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Email Address</label>
+                        <input type="email" x-model="email" required
+                               class="w-full bg-gray-50 text-gray-800 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium placeholder-gray-400"
+                               placeholder="nama@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase tracking-widest mb-2">Password</label>
+                        <input type="password" x-model="password" required
+                               class="w-full bg-gray-50 text-gray-800 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-gold font-medium placeholder-gray-400"
+                               placeholder="••••••••">
+                    </div>
+                    <button type="submit" :disabled="loading"
+                            class="w-full bg-navy text-white py-4 rounded-2xl font-bold text-lg hover:bg-opacity-90 transition shadow-xl shadow-navy/20 disabled:opacity-50">
+                        <span x-show="!loading">Masuk ke Akun</span>
+                        <span x-show="loading">Memproses...</span>
+                    </button>
+                </form>
+            </div>
 
             <div class="mt-10 text-center">
                 <p class="text-gray-600 text-sm">

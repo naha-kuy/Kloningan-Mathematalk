@@ -1,51 +1,15 @@
-// Seed token from server-side flash session on first redirect after login.
+// Load token from server-side flash (for server-rendered pages)
 if (typeof window.__API_TOKEN === 'string' && window.__API_TOKEN.length > 0) {
     localStorage.setItem('mathematalk_token', window.__API_TOKEN);
 }
 
-// Transfer token from cookie to localStorage (legacy fallback).
-(function() {
-    const match = document.cookie.match(/(?:^|; )mathematalk_token=([^;]*)/);
-    if (match) {
-        try {
-            const token = decodeURIComponent(match[1]);
-            const currentToken = localStorage.getItem('mathematalk_token');
-
-            // Never overwrite an existing valid token in localStorage.
-            if (currentToken && currentToken.includes('|')) {
-                document.cookie = 'mathematalk_token=; Max-Age=0; path=/; SameSite=Lax';
-                return;
-            }
-
-            // Only store cookie value if it looks like Sanctum plain-text token.
-            if (token && token.includes('|')) {
-                localStorage.setItem('mathematalk_token', token);
-            }
-
-            // Always clear one-time transfer cookie.
-            document.cookie = 'mathematalk_token=; Max-Age=0; path=/; SameSite=Lax';
-        } catch (e) {
-            console.warn('Failed to transfer auth token from cookie', e);
-        }
-    }
-})();
-
 function getToken() {
-    const token = localStorage.getItem('mathematalk_token');
-
-    // Sanctum plain-text token format is "<id>|<token>".
-    // If token format is invalid (e.g. encrypted cookie payload), clear it.
-    if (token && !token.includes('|')) {
-        localStorage.removeItem('mathematalk_token');
-        return null;
-    }
-
-    return token;
+    return localStorage.getItem('mathematalk_token');
 }
 
 function handleUnauthorized() {
     localStorage.removeItem('mathematalk_token');
-    window.location.href = '/login';
+    window.location.href = 'login.html';
 }
 
 async function apiFetch(url, options = {}) {
@@ -77,7 +41,9 @@ async function apiFetch(url, options = {}) {
     }
 
     // Use url directly - no API_BASE_URL prepending
-    const response = await fetch(url, fetchOptions);
+    const apiBase = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? '' : '';
+    const response = await fetch(apiBase + url, fetchOptions);
 
     if (response.status === 401) {
         handleUnauthorized();
@@ -275,8 +241,10 @@ window.formatDate = function(dateString) {
 document.addEventListener('alpine:init', () => {
     Alpine.data('authCheck', () => ({
         init() {
-            if (!getToken() && !window.__API_TOKEN && !window.location.pathname.startsWith('/login') && !['/', '/store', '/hall-of-fame'].includes(window.location.pathname)) {
-                window.location.href = '/login';
+            const publicPaths = ['index.html', 'about-us.html', 'contact.html', 'store.html', 'hall-of-fame.html', 'kelas-aktif.html', 'private-class.html', 'login.html', 'register.html', 'forgot-password.html'];
+            const current = window.location.pathname.split('/').pop() || 'index.html';
+            if (!getToken() && !current.startsWith('ortu-') && !publicPaths.includes(current)) {
+                window.location.href = 'login.html';
             }
         }
     }));
