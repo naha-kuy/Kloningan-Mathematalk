@@ -65,10 +65,10 @@ export default function OrtuGantiPasswordPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {toast && (
         <div
-          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-sm font-medium text-white ${
+          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-2xl shadow-lg text-sm font-bold text-white ${
             toast.type === 'error' ? 'bg-red-500' : 'bg-green-500'
           }`}
         >
@@ -76,65 +76,68 @@ export default function OrtuGantiPasswordPage() {
         </div>
       )}
 
-      <h1 className="text-2xl font-bold text-navy">Ganti Password</h1>
+      <div>
+        <h2 className="text-3xl font-black text-navy leading-tight">Ganti Password</h2>
+        <p className="text-gray-500 font-medium mt-1">Perbarui kata sandi akun Anda secara berkala.</p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-5 max-w-lg">
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-[2rem] border border-gray-50 shadow-sm space-y-6 max-w-xl">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Password Saat Ini</label>
+          <label className="block text-sm font-bold text-gray-700 mb-1.5">Password Saat Ini</label>
           <input
             required
             type="password"
             name="current_password"
             value={form.current_password}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 ${
-              errors.current_password ? 'border-red-400' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 transition-all ${
+              errors.current_password ? 'border-red-400' : 'border-gray-200'
             }`}
           />
           {errors.current_password && (
-            <p className="text-xs text-red-500 mt-1">{errors.current_password}</p>
+            <p className="text-xs text-red-500 mt-1.5 font-medium">{errors.current_password}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Password Baru</label>
+          <label className="block text-sm font-bold text-gray-700 mb-1.5">Password Baru</label>
           <input
             required
             type="password"
             name="password"
             value={form.password}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 ${
-              errors.password ? 'border-red-400' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 transition-all ${
+              errors.password ? 'border-red-400' : 'border-gray-200'
             }`}
           />
           {errors.password && (
-            <p className="text-xs text-red-500 mt-1">{errors.password}</p>
+            <p className="text-xs text-red-500 mt-1.5 font-medium">{errors.password}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password Baru</label>
+          <label className="block text-sm font-bold text-gray-700 mb-1.5">Konfirmasi Password Baru</label>
           <input
             required
             type="password"
             name="password_confirmation"
             value={form.password_confirmation}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 ${
-              errors.password_confirmation ? 'border-red-400' : 'border-gray-300'
+            className={`w-full px-4 py-3 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 transition-all ${
+              errors.password_confirmation ? 'border-red-400' : 'border-gray-200'
             }`}
           />
           {errors.password_confirmation && (
-            <p className="text-xs text-red-500 mt-1">{errors.password_confirmation}</p>
+            <p className="text-xs text-red-500 mt-1.5 font-medium">{errors.password_confirmation}</p>
           )}
         </div>
 
-        <div className="pt-2">
+        <div className="pt-4">
           <button
             type="submit"
             disabled={submitting}
-            className="px-8 py-2.5 bg-navy text-white rounded-lg text-sm font-medium hover:bg-navy/90 disabled:opacity-50 transition-colors"
+            className="px-8 py-3 bg-navy text-white font-bold rounded-2xl shadow-lg shadow-navy/20 hover:-translate-y-1 disabled:opacity-50 transition-all text-sm"
           >
             {submitting ? 'Mengganti...' : 'Ganti Password'}
           </button>

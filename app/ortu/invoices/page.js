@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 function formatIDR(amount) {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
@@ -8,26 +9,26 @@ function formatIDR(amount) {
 
 function formatDate(dateStr) {
   if (!dateStr) return '-';
-  return new Date(dateStr).toLocaleDateString('id-ID');
+  return new Date(dateStr).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 const statusStyles = {
-  unpaid: 'bg-yellow-100 text-yellow-800',
-  paid: 'bg-green-100 text-green-800',
-  overdue: 'bg-red-100 text-red-800',
-  cancelled: 'bg-gray-100 text-gray-600',
+  menunggu: 'bg-gold/10 text-gold',
+  draft: 'bg-gray-100 text-gray-600',
+  lunas: 'bg-green-50 text-green-600',
+  overdue: 'bg-red-50 text-red-600',
+  terkirim: 'bg-blue-50 text-blue-600',
+  batal: 'bg-gray-50 text-gray-500',
 };
 
 const statusLabels = {
-  unpaid: 'Belum Dibayar',
-  paid: 'Lunas',
-  overdue: 'Jatuh Tempo',
-  cancelled: 'Dibatalkan',
+  menunggu: 'Menunggu Pembayaran',
+  draft: 'Draft',
+  lunas: 'Lunas',
+  overdue: 'Terlambat',
+  terkirim: 'Terkirim',
+  batal: 'Dibatalkan',
 };
-
-function Skeleton({ className }) {
-  return <div className={`animate-pulse bg-gray-200 rounded ${className}`} />;
-}
 
 export default function OrtuInvoicesPage() {
   const [invoices, setInvoices] = useState([]);
@@ -51,7 +52,7 @@ export default function OrtuInvoicesPage() {
       });
       if (!res.ok) throw new Error('Gagal memuat data tagihan');
       const json = await res.json();
-      setInvoices(Array.isArray(json) ? json : json.data || []);
+      setInvoices(json.data?.data || []);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -83,12 +84,10 @@ export default function OrtuInvoicesPage() {
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <Skeleton className="h-8 w-48" />
-        <div className="space-y-3">
-          {[1, 2, 3].map((i) => (
-            <Skeleton key={i} className="h-20 rounded-xl" />
-          ))}
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-navy border-t-transparent rounded-full animate-spin" />
+          <p className="text-gray-600 font-medium">Memuat tagihan...</p>
         </div>
       </div>
     );
@@ -96,11 +95,12 @@ export default function OrtuInvoicesPage() {
 
   if (error) {
     return (
-      <div className="text-center py-16">
-        <p className="text-red-600 font-medium">{error}</p>
+      <div className="bg-red-50 border border-red-100 rounded-2xl p-8 text-center">
+        <div className="text-4xl mb-4">⚠️</div>
+        <h3 className="text-red-800 font-black text-lg mb-2">{error}</h3>
         <button
           onClick={fetchInvoices}
-          className="mt-4 px-6 py-2 bg-navy text-white rounded-lg hover:bg-navy/90 transition-colors"
+          className="mt-4 px-6 py-2 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-colors"
         >
           Coba Lagi
         </button>
@@ -109,10 +109,10 @@ export default function OrtuInvoicesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {toast && (
         <div
-          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-sm font-medium text-white ${
+          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-2xl shadow-lg text-sm font-bold text-white ${
             toast.type === 'error' ? 'bg-red-500' : 'bg-green-500'
           }`}
         >
@@ -120,46 +120,53 @@ export default function OrtuInvoicesPage() {
         </div>
       )}
 
-      <h1 className="text-2xl font-bold text-navy">Tagihan</h1>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-3xl font-black text-navy leading-tight">Tagihan</h2>
+          <p className="text-gray-500 font-medium mt-1">Riwayat tagihan dan pembayaran kelas anak Anda.</p>
+        </div>
+      </div>
 
       {invoices.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
-          <p className="text-gray-500">Belum ada tagihan</p>
+        <div className="bg-white border-2 border-dashed border-gray-100 p-12 rounded-[2.5rem] text-center">
+          <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">✅</div>
+          <h4 className="text-lg font-bold text-navy mb-2">Belum ada tagihan</h4>
+          <p className="text-gray-600 font-medium max-w-xs mx-auto">Tidak ada tagihan yang perlu dibayarkan saat ini.</p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {invoices.map((inv, i) => (
+        <div className="space-y-4">
+          {invoices.map((inv) => (
             <div
-              key={inv.id ?? i}
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+              key={inv.id}
+              className="bg-white p-6 rounded-[2rem] border border-gray-50 shadow-sm hover:shadow-xl hover:shadow-navy/5 transition-all"
             >
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-navy">{inv.nomor_invoice}</p>
-                <p className="text-sm text-gray-500 truncate">{inv.kelas_nama || inv.nama_kelas || '-'}</p>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-xs text-gray-400">
-                  <span>Buat: {formatDate(inv.created_at)}</span>
-                  <span>Jatuh Tempo: {formatDate(inv.jatuh_tempo)}</span>
-                  {inv.paid_at && <span>Lunas: {formatDate(inv.paid_at)}</span>}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-1">
+                    <p className="font-black text-navy text-lg">{inv.nomor_invoice}</p>
+                    <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest ${statusStyles[inv.status] || 'bg-gray-100 text-gray-600'}`}>
+                      {statusLabels[inv.status] || inv.status}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-500">{inv.nama_kelas || '-'}</p>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-gray-400">
+                    <span>📅 Buat: {formatDate(inv.created_at)}</span>
+                    <span>⏰ Jatuh Tempo: {formatDate(inv.jatuh_tempo)}</span>
+                    {inv.paid_at && <span>✅ Lunas: {formatDate(inv.paid_at)}</span>}
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 shrink-0">
-                <span className="font-bold text-navy">{formatIDR(inv.total_tagihan)}</span>
-                <span
-                  className={`px-2.5 py-0.5 text-xs font-medium rounded-full ${
-                    statusStyles[inv.status] || 'bg-gray-100 text-gray-600'
-                  }`}
-                >
-                  {statusLabels[inv.status] || inv.status}
-                </span>
-                {(inv.status === 'unpaid' || inv.status === 'overdue') && (
-                  <button
-                    onClick={() => handleBayar(inv.id)}
-                    disabled={payingId === inv.id}
-                    className="px-4 py-1.5 text-sm font-medium bg-gold text-white rounded-lg hover:bg-gold/90 disabled:opacity-50 transition-colors"
-                  >
-                    {payingId === inv.id ? 'Memproses...' : 'Bayar'}
-                  </button>
-                )}
+                <div className="flex items-center gap-4 shrink-0">
+                  <span className="font-black text-navy text-xl">{formatIDR(inv.total_tagihan)}</span>
+                  {(inv.status === 'menunggu' || inv.status === 'overdue' || inv.status === 'terkirim') && (
+                    <button
+                      onClick={() => handleBayar(inv.id)}
+                      disabled={payingId === inv.id}
+                      className="px-6 py-3 bg-gold text-white font-bold rounded-2xl shadow-lg shadow-gold/20 hover:-translate-y-1 disabled:opacity-50 transition-all text-sm"
+                    >
+                      {payingId === inv.id ? 'Memproses...' : 'Bayar Sekarang'}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}

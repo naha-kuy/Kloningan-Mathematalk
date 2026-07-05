@@ -3,6 +3,7 @@ import './globals.css';
 export const metadata = {
   title: 'Mathematalk - Taklukkan Olimpiade!',
   description: 'Partner terpercaya persiapan olimpiade matematika. Bimbingan dari para juara untuk meraih prestasi tertinggi.',
+  icons: { icon: '/favicon.png' },
 };
 
 export default function RootLayout({ children }) {

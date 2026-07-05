@@ -6,6 +6,8 @@
 
 [x-cloak] { display: none !important; }
 
+html { scroll-behavior: smooth; }
+
 @layer components {
   .btn-kidzy {
     @apply rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg inline-flex items-center justify-center;

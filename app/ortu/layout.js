@@ -16,16 +16,15 @@ function parseJwt(token) {
 }
 
 const navItems = [
-  { label: 'Dashboard', href: '/ortu/dashboard' },
-  { label: 'Kelas Saya', href: '/ortu/kelas' },
-  { label: 'Data Anak', href: '/ortu/anak' },
+  { label: 'Beranda', href: '/ortu/dashboard' },
+  { label: 'Kelas Anak', href: '/ortu/kelas' },
+  { label: 'Daftar Anak', href: '/ortu/anak' },
   { label: 'Tagihan', href: '/ortu/invoices' },
-  { label: 'Profile', href: '/ortu/profile' },
-  { label: 'Ganti Password', href: '/ortu/ganti-password' },
+  { label: 'Profil Saya', href: '/ortu/profile' },
 ];
 
 export default function OrtuLayout({ children }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
   const [userName, setUserName] = useState('');
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -53,79 +52,116 @@ export default function OrtuLayout({ children }) {
   };
 
   if (!mounted) {
-    return <div className="min-h-screen bg-cream" />;
+    return <div className="min-h-screen bg-[#F8FAFC]" />;
   }
 
   if (isRegisterPage) {
     return <>{children}</>;
   }
 
-  return (
-    <div className="min-h-screen bg-cream flex">
-      <div
-        className={`fixed inset-0 bg-black/50 z-20 lg:hidden transition-opacity ${sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        onClick={() => setSidebarOpen(false)}
-      />
+  const isActive = (href) => pathname === href;
 
-      <aside
-        className={`fixed top-0 left-0 z-30 h-full w-64 bg-navy text-white transform transition-transform duration-200 lg:translate-x-0 lg:static lg:z-auto flex flex-col ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-      >
-        <div className="p-6 border-b border-white/10">
-          <h1 className="text-xl font-bold text-gold">Mathematalk</h1>
-          <p className="text-sm text-white/60 mt-1">Portal Orang Tua</p>
-        </div>
-        <nav className="flex-1 py-4 overflow-y-auto">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] font-sans">
+      {/* Sticky Header */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 h-20 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto h-full px-6 lg:px-12 flex items-center justify-between">
+          <Link href="/" className="flex items-center py-2">
+            <img src="/images/logo_light.png" alt="Mathematalk Logo" className="h-12 w-auto" />
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-6 py-3 text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-gold/20 text-gold border-r-2 border-gold'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                  isActive(item.href)
+                    ? 'bg-navy text-white shadow-lg shadow-navy/20'
+                    : 'text-gray-600 hover:text-navy hover:bg-gray-50'
                 }`}
               >
                 {item.label}
               </Link>
-            );
-          })}
-        </nav>
-        <div className="p-4 border-t border-white/10 text-xs text-white/40">
-          &copy; {new Date().getFullYear()} Mathematalk
-        </div>
-      </aside>
+            ))}
+          </nav>
 
-      <div className="flex-1 flex flex-col min-h-screen">
-        <header className="bg-white shadow-sm border-b border-gray-200 px-4 lg:px-8 py-4 flex items-center justify-between">
-          <button
-            className="lg:hidden p-2 -ml-2 rounded-lg hover:bg-gray-100"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <svg className="w-6 h-6 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-
-          <div className="flex items-center gap-4 ml-auto">
+          {/* User Profile / Logout */}
+          <div className="flex items-center space-x-4">
             {userName && (
-              <span className="text-sm font-medium text-navy">Halo, {userName}</span>
+              <div className="text-right hidden lg:block">
+                <p className="text-[10px] text-gray-600 font-bold leading-none mb-1 uppercase tracking-wider">Selamat Datang,</p>
+                <span className="font-bold text-sm text-navy">{userName}</span>
+              </div>
             )}
+            <div className="h-8 w-[1px] bg-gray-100 mx-2 hidden md:block" />
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors"
+              className="hidden md:block text-xs font-bold text-red-500 hover:text-red-600 transition-colors bg-red-50 px-3 py-2 rounded-lg"
             >
               Logout
             </button>
-          </div>
-        </header>
 
-        <main className="flex-1 p-4 lg:p-8">
-          {children}
-        </main>
-      </div>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenu(!mobileMenu)}
+              className="md:hidden p-2 text-navy hover:bg-gray-50 rounded-xl transition-colors"
+            >
+              {!mobileMenu ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        {mobileMenu && (
+          <div className="md:hidden bg-white border-b border-gray-100 shadow-2xl absolute inset-x-0 top-full z-50 p-6">
+            <div className="space-y-4">
+              {userName && (
+                <div className="pb-4 mb-4 border-b border-gray-50">
+                  <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-1">Akun Saya</p>
+                  <p className="font-bold text-navy">{userName}</p>
+                </div>
+              )}
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenu(false)}
+                  className={`flex items-center space-x-3 p-3 rounded-xl font-bold ${
+                    isActive(item.href)
+                      ? 'bg-navy text-white'
+                      : 'text-gray-500 hover:bg-gray-50'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+              <div className="pt-4 mt-4 border-t border-gray-50">
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center space-x-3 p-3 rounded-xl font-bold text-red-500 hover:bg-red-50"
+                >
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 py-10 min-h-[calc(100vh-5rem)]">
+        {children}
+      </main>
     </div>
   );
 }

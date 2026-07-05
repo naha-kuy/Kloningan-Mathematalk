@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 function Skeleton({ className }) {
-  return <div className={`animate-pulse bg-gray-200 rounded ${className}`} />;
+  return <div className={`animate-pulse bg-gray-200 rounded-2xl ${className}`} />;
 }
 
 export default function OrtuProfilePage() {
@@ -93,22 +93,20 @@ export default function OrtuProfilePage() {
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <Skeleton className="h-8 w-48" />
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-4">
-          {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="h-10 w-full" />
-          ))}
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-navy border-t-transparent rounded-full animate-spin" />
+          <p className="text-gray-600 font-medium">Memuat profil...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {toast && (
         <div
-          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-sm font-medium text-white ${
+          className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-2xl shadow-lg text-sm font-bold text-white ${
             toast.type === 'error' ? 'bg-red-500' : 'bg-green-500'
           }`}
         >
@@ -116,49 +114,52 @@ export default function OrtuProfilePage() {
         </div>
       )}
 
-      <h1 className="text-2xl font-bold text-navy">Profile</h1>
+      <div>
+        <h2 className="text-3xl font-black text-navy leading-tight">Profil Saya</h2>
+        <p className="text-gray-500 font-medium mt-1">Kelola informasi akun Anda.</p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-5">
+      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-[2rem] border border-gray-50 shadow-sm space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Nama Lengkap</label>
             <input
               required
               type="text"
               name="name"
               value={form.name}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Email</label>
             <input
               required
               type="email"
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Phone</label>
             <input
               type="tel"
               name="phone"
               value={form.phone}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Provinsi</label>
             <select
               name="province"
               value={form.province}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             >
               <option value="">Pilih Provinsi</option>
               {provinces.map((p, i) => (
@@ -169,85 +170,91 @@ export default function OrtuProfilePage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Kota</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Kota</label>
             <input
               type="text"
               name="city"
               value={form.city}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Alamat</label>
             <input
               type="text"
               name="address"
               value={form.address}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Kode Pos</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Kode Pos</label>
             <input
               type="text"
               name="postal_code"
               value={form.postal_code}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Kontak Darurat - Nama</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Kontak Darurat - Nama</label>
             <input
               type="text"
               name="emergency_contact_name"
               value={form.emergency_contact_name}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Kontak Darurat - Phone</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Kontak Darurat - Phone</label>
             <input
               type="tel"
               name="emergency_contact_phone"
               value={form.emergency_contact_phone}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Pekerjaan</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Pekerjaan</label>
             <input
               type="text"
               name="occupation"
               value={form.occupation}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Catatan</label>
+            <label className="block text-sm font-bold text-gray-700 mb-1.5">Catatan</label>
             <input
               type="text"
               name="notes"
               value={form.notes}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy"
+              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
             />
           </div>
         </div>
 
-        <div className="pt-2">
+        <div className="pt-4 flex items-center gap-4">
           <button
             type="submit"
             disabled={saving}
-            className="px-8 py-2.5 bg-navy text-white rounded-lg text-sm font-medium hover:bg-navy/90 disabled:opacity-50 transition-colors"
+            className="px-8 py-3 bg-navy text-white font-bold rounded-2xl shadow-lg shadow-navy/20 hover:-translate-y-1 disabled:opacity-50 transition-all text-sm"
           >
             {saving ? 'Menyimpan...' : 'Simpan Profil'}
           </button>
+          <a
+            href="/ortu/ganti-password"
+            className="px-8 py-3 border-2 border-gray-200 text-gray-700 font-bold rounded-2xl hover:bg-gray-50 transition-all text-sm"
+          >
+            Ganti Password
+          </a>
         </div>
       </form>
     </div>
