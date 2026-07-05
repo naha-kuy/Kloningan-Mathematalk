@@ -104,7 +104,7 @@ export default function LoginPage() {
 
           <p className="text-center text-sm text-navy/60 mt-6">
             Belum punya akun?{' '}
-            <Link href="/ortu/register" className="text-gold font-bold hover:underline">Daftar Sekarang</Link>
+            <Link href="/register" className="text-gold font-bold hover:underline">Daftar Sekarang</Link>
           </p>
         </div>
       </main>

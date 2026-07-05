@@ -31,8 +31,11 @@ export default function OrtuLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  const isRegisterPage = pathname === '/ortu/register';
+
   useEffect(() => {
     setMounted(true);
+    if (isRegisterPage) return;
     const token = localStorage.getItem('mathematalk_token');
     if (!token) {
       router.replace('/login');
@@ -42,7 +45,7 @@ export default function OrtuLayout({ children }) {
     if (decoded?.name) {
       setUserName(decoded.name);
     }
-  }, [router]);
+  }, [router, isRegisterPage]);
 
   const handleLogout = () => {
     localStorage.removeItem('mathematalk_token');
@@ -51,6 +54,10 @@ export default function OrtuLayout({ children }) {
 
   if (!mounted) {
     return <div className="min-h-screen bg-cream" />;
+  }
+
+  if (isRegisterPage) {
+    return <>{children}</>;
   }
 
   return (

@@ -109,7 +109,7 @@ export default function Header() {
             ) : (
               <>
                 <Link href="/login" className="text-[#0D2B5E] font-black text-sm hover:text-[#F59E0B] transition-colors">Masuk</Link>
-                <Link href="/ortu/register" className="bg-[#F59E0B] text-white px-6 lg:px-8 py-2.5 rounded-full font-black text-sm hover:bg-[#0D2B5E] transition-all duration-300 shadow-lg shadow-[#F59E0B]/20">
+                <Link href="/register" className="bg-[#F59E0B] text-white px-6 lg:px-8 py-2.5 rounded-full font-black text-sm hover:bg-[#0D2B5E] transition-all duration-300 shadow-lg shadow-[#F59E0B]/20">
                   Daftar
                 </Link>
               </>
@@ -167,7 +167,7 @@ export default function Header() {
             ) : (
               <>
                 <Link href="/login" className="bg-[#0D2B5E] text-white py-4 rounded-full text-center font-black shadow-lg" onClick={() => setMenuOpen(false)}>Masuk</Link>
-                <Link href="/ortu/register" className="bg-[#F59E0B] text-white py-4 rounded-full text-center font-black shadow-lg" onClick={() => setMenuOpen(false)}>Daftar Sekarang</Link>
+                <Link href="/register" className="bg-[#F59E0B] text-white py-4 rounded-full text-center font-black shadow-lg" onClick={() => setMenuOpen(false)}>Daftar Sekarang</Link>
               </>
             )}
           </div>
